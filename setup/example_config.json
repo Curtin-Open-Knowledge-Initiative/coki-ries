@@ -1,0 +1,10 @@
+{
+  "bucket"  : "rt-era-public",
+  "dataset" : "demo",
+  "replace" : false,
+  "verbose" : true,
+  "dryrun"  : true,
+  "yr_from" : 2016,
+  "yr_to"   : 2021,
+  "ror_url" : "https://ror.org/02n415q13"
+}

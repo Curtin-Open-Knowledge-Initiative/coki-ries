@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    header {
+      position:relative; 
+      display:flex;
+      align-items:center;
+      justify-content: center;
+      z-index:1; 
+      left:0; 
+      top:0; 
+      width:100%; 
+      height:10vw; 
+      background-color:#FFF;
+      font-family: arial;
+      font-size: 3vw;
+      font-weight: bold;
+    }
+    header img {
+      position:relative;
+      height : 10vw;
+    }
+    header span {
+      padding-left:1rem;
+    }
+    header div {
+      position:relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height:100%;
+    }
+    body {
+      font-family:Arial, Helvetica, sans-serif;
+    }
+    table { 
+      margin: 5vh auto;
+      border: solid black 1px;
+    }
+    table td, table th {
+      padding: 1vh;
+    }
+    tr {
+      border-bottom: black 1px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="https://openknowledge.community/" target="new">
+      <img src="https://openknowledge.community/wp-content/uploads/2022/05/coki_small_transparent.png" alt="COKI" id="logo" />
+    </a>
+    <span>COKI - RIES Demo Data</span>
+  </header>
+
+  <table cellspacing="0">
+    <thead>
+      <tr>
+        <th>Dataset</th>
+        <th>Description</th>
+        <th>Schema</th>
+        <th>Datafiles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>era_historical_ratings</td>
+        <td>Historical ERA ratings sourced from the ARC</td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/era_historical_ratings/schema.json'>schema</a></td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/era_historical_ratings/data.jsonl'>file1</a></td>
+      </tr>
+
+      <tr>
+        <td>raw_forcodes_2008</td>
+        <td>ANZSRC Field of Research codes (version 2008) sourced from the ABS</td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_forcodes_2008/schema.json'>schema</a></td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_forcodes_2008/data.jsonl'>file1</a></td>
+      </tr>
+
+      <tr>
+        <td>raw_forcodes_2020</td>
+        <td>ANZSRC Field of Research codes (version 2020) sourced from the ABS</td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_forcodes_2020/schema.json'>schema</a></td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_forcodes_2020/data.jsonl'>file1</a></td>
+      </tr>
+
+      <tr>
+        <td>raw_heps</td>
+        <td>A list of Australian Higher Education Providers</td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_heps/schema.json'>schema</a></td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_heps/data.jsonl'>file1</a></td>
+      </tr>
+
+      <tr>
+        <td>raw_issns</td>
+        <td>A list of ISSN to ISSN-L mappings sourced from issn.org</td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_issns/schema.json'>schema</a></td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_issns/data.jsonl'>file1</a></td>
+      </tr>
+
+      <tr>
+        <td>raw_journals_2018</td>
+        <td>The ERA 2018 Journal List sourced from the ARC</td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_journals_2018/schema.json'>schema</a></td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_journals_2018/data.jsonl'>file1</a></td>
+      </tr>
+
+      <tr>
+        <td>raw_journals_2023</td>
+        <td>The ERA 2023 Journal List sourced from the ARC</td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_journals_2023/schema.json'>schema</a></td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_journals_2023/data.jsonl'>file1</a></td>
+      </tr>
+
+      <tr>
+        <td>raw_papers</td>
+        <td>A subset of papers (2016) sourced from COKI</td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_papers/schema.json'>schema</a></td>
+        <td>
+          <a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_papers/000000000000.jsonl.gz'>file1</a>
+          <a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_papers/000000000001.jsonl.gz'>file2</a>
+          <a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_papers/000000000002.jsonl.gz'>file3</a>
+        </td>
+      </tr>
+
+      <tr>
+        <td>raw_rors</td>
+        <td>A list of organisations sourced from ROR.org</td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_rors/schema.json'>schema</a></td>
+        <td><a href='https://storage.googleapis.com/rt-era-public/data/raw/raw_rors/data.jsonl'>file1</a></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</body>
+</html>

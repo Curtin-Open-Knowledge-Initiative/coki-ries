@@ -1,0 +1,9 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "cli": "node app.js",
+    "ping": "node utilities/test_config"
+  }
+}

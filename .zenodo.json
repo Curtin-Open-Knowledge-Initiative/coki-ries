@@ -1,0 +1,44 @@
+{
+  "upload_type": "software",
+  "publication_date": "2022-10-04",
+  "title": "COKI Research Output Evaluation Pilot System",
+  "creators": [
+    {
+      "orcid": "0000-0003-3464-0770",
+      "affiliation": "Curtin Institute for Computation, Curtin University",
+      "name": "Julian Tonti-Filippini"
+    },
+    {
+      "orcid": "0000-0003-1202-7238",
+      "affiliation": "Curtin Institute for Computation, Curtin University",
+      "name": "Kathryn R. Napier"
+    },
+    {
+      "orcid": "0000-0002-0068-716X",
+      "affiliation": "Centre for Culture and Technology, Curtin University",
+      "name": "Cameron Neylon"
+    }
+  ],
+  "description": "<p>An on-demand pilot system for calculating ERA-like benchmarks using open data and transparent analysis.</p><p><strong>Contributors</strong><br>\nConceptualization: Julian Tonti-Filippini and Cameron Neylon.<br>\nData curation: Julian Tonti-Filippini.<br>\nFormal analysis: Julian Tonti-Filippini.<br>\nFunding acquisition: Cameron Neylon.<br>\nInvestigation: Julian Tonti-Filippini.<br>\nMethodology: Julian Tonti-Filippini and Cameron Neylon.<br>\nProject administration: Kathryn Napier and Cameron Neylon.<br>\nResources: Cameron Neylon.<br>\nSoftware: Julian Tonti-Filippini and Cameron Neylon.<br>\nSupervision: Kathryn Napier and Cameron Neylon.<br>\nValidation: Julian Tonti-Filippini.<br>\nVisualisation: Julian Tonti-Filippini.<br>\nWriting - original draft: Julian Tonti-Filippini and Cameron Neylon.<br>\nWriting - review & editing: Julian Tonti-Filippini, Kathryn Napier, and Cameron Neylon.</p>",
+  "access_right": "open",
+  "license": "Apache-2.0",
+  "keywords": [
+    "ERA",
+    "excellence in research for australia",
+    "research evaluation",
+    "benchmarks",
+    "COKI"
+  ],
+  "notes": "The Curtin Open Knowledge Initiative (COKI) is a strategic initiative of the Research Office at Curtin, the Faculty of Humanities, School of Media, Creative Arts and Social Inquiry and the Curtin Institute for Computation.",
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.7084440",
+      "relation": "isDescribedBy",
+      "scheme": "doi",
+      "resource_type": "softwaredocumentation"
+    }
+  ],
+  "communities": [{ "identifier": "coki" }],
+  "version": "1.0.0",
+  "language": "eng"
+}

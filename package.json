@@ -1,0 +1,39 @@
+{
+  "name": "for_benchmark_predictions",
+  "version": "1.0.0",
+  "description": "Generates data tables and plots for publication analysis that's based on field of research (FoR).",
+  "type": "commonjs",
+  "main": "code/app.js",
+  "scripts": {
+    "build": "node code/app.js compile_all",
+    "cli": "node code/app.js",
+    "ping": "node code/app.js test_config", 
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Julian Tonti-Filippini",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@fast-csv/parse": "^4.3.6",
+    "@google-cloud/bigquery": "^5.10.0",
+    "app": "link:code",
+    "docopt": "^0.6.2",
+    "exceljs": "^4.3.0",
+    "shelljs": "^0.8.5"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "directories": {
+    "doc": "docs",
+    "lib": "code"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/issues"
+  },
+  "homepage": "https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions#readme"
+}

@@ -1,0 +1,6 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# paths to exclude from the release
+/node_modules export-ignore
+/code/internal export-ignore
