@@ -33,8 +33,8 @@ If no settings are provided by the user then these are the baseline defaults:
 {
   "keyfile" : "../setup/.keyfile.json",
   "bucket"  : "rt-era-public",
-  "project" : "ries_demo",
-  "dataset" : "ries",
+  "project" : "<read_from_keyfile>",
+  "dataset" : "ries_demo",
   "replace" : false,
   "verbose" : false,
   "dryrun"  : false
@@ -52,7 +52,6 @@ In this example, the `.config.json` file skips institutional analysis, prints al
 
 ```js
 {
-  "project" : "my_project",
   "verbose" : true,
   "start"   : 2011,
   "finish"  : 2016,

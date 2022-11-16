@@ -143,8 +143,8 @@ const conf = new function() {
   // config schema and defaults
   const schema = {
     keyfile : { default: resolve('setup/.keyfile.json'), test: types.file  , info: 'path to a BigQuery credentials file (or symlink)'                                },
-    project : { default: 'ries'                        , test: types.term  , info: 'the BigQuery project-id that the application has permission to access'           },
-    dataset : { default: 'demo'                        , test: types.term  , info: 'the BigQuery dataset-id that the application has permission to modify tables in' },
+    project : { default: ''                            , test: types.term  , info: 'the BigQuery project-id that the application has permission to access'           },
+    dataset : { default: 'ries_demo'                   , test: types.term  , info: 'the BigQuery dataset-id that the application has permission to modify tables in' },
     bucket  : { default: 'gs://rt-era-public'          , test: types.bucket, info: 'address of the COKI Google Cloud Storage bucket where datafiles may be found'    },
     replace : { default: false                         , test: types.bool  , info: 'set to true to replace tables if they exist (or use the --replace CLI flag)'     },
     verbose : { default: false                         , test: types.bool  , info: 'set to true to log most activity (or use the --verbose CLI flag)'                },
@@ -179,7 +179,10 @@ const conf = new function() {
 
   // get the default config
   function args_get_default() {
-    return Object.fromEntries(Object.keys(schema).map(key => [key,schema[key].default]));
+    const args = Object.fromEntries(Object.keys(schema).map(key => [key,schema[key].default]));
+    check('keyfile',args.keyfile);
+    args.project = require(args.keyfile).project_id;
+    return args;
   }
 
   // load args from the config file

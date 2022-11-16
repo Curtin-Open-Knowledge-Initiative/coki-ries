@@ -1,5 +1,5 @@
 {
-  "bucket"  : "rt-era-public",
+  "bucket"  : "gs://rt-era-public",
   "dataset" : "demo",
   "replace" : false,
   "verbose" : true,

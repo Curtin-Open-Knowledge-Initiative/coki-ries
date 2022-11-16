@@ -5,9 +5,9 @@
   "type": "commonjs",
   "main": "code/app.js",
   "scripts": {
-    "build": "node code/app.js compile_all",
+    "build": "node code/utilities/compile_all",
     "cli": "node code/app.js",
-    "ping": "node code/app.js test_config", 
+    "ping": "node code/utilities/config_test", 
     "test": "jest"
   },
   "keywords": [],

@@ -1,6 +1,6 @@
 # Installation
 
-The application can be run from a Docker container or installed locally. Either way, it will require access to BigQuery.
+The application can be run from a Docker container or installed locally. Either way, it will require access to BigQuery. You do not need to clone this repo from GitHub to run the application.
 
 ## Obtain a BigQuery Keyfile
 
@@ -34,23 +34,25 @@ Once you have your keyfile, store it in a safe location outside the project dire
 }
 ```
 
----
+## Option 1 - Docker + install script
 
-## Option 1 - Install script for unix-like systems (including OS X)
-
-Prerequisites: curl, unzip, nodejs, npm
+Requirements: keyfile.json, bash, curl, docker
 
 ```bash
-# TODO: replace with link to public repo
-curl https://storage.googleapis.com/rt-era-public/code/release/ries/install_nix.bash -o install.bash
-bash install.bash \
-  --keyfile /path/to/your/keyfile.json \
-  --project bigquery-project-name \
-  --dataset bigquery-dataset-name \
-;
+curl https://storage.googleapis.com/rt-era-public/code/release/ries/install_docker.bash -o install.bash
+bash install.bash /path/to/your/keyfile.json
 ```
 
-## Option 2 - Manual Install
+## Option 2 - Unix-like system + install script
+
+Requirements: keyfile.json, bash, curl, nodejs, npm (an attempt will be made to auto-install these if missing)
+
+```bash
+curl https://storage.googleapis.com/rt-era-public/code/release/ries/install_nix.bash -o install.bash
+bash install.bash /path/to/your/keyfile.json
+```
+
+## Option 3 - Manual Install
 
 Substitute `apk` for your package manager (eg `brew` on OS X)
 
@@ -82,7 +84,7 @@ npm run ping
 npm run cli -- compile_all
 ```
 
-## Option 3 - Docker
+## Option 4 - Docker
 
 Check that you have docker available at the command line: `which docker && docker--version`. You do not have to clone this repo to run the app with docker.
 

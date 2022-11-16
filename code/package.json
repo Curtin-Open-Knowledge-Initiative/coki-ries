@@ -4,6 +4,6 @@
   "main": "app.js",
   "scripts": {
     "cli": "node app.js",
-    "ping": "node utilities/test_config"
+    "ping": "node utilities/config_test"
   }
 }
