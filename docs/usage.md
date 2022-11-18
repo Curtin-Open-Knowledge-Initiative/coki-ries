@@ -17,14 +17,14 @@ Usage:
   cli compile_core        [options]
   cli compile_indicators  [options]
   cli compile_raw         [options]
+  cli config_print        [options]
+  cli config_test         [options]
   cli plot_workflow       [options]
   cli plot_workflow_core  [options]
   cli query_exec          [options] <id>
   cli query_list          [options]
   cli query_print         [options] <id>
-  cli test_config         [options]
-  cli [options]
-
+  
 Options:
   --help, -h        Show this help message
   --version, -v     Current version

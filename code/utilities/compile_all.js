@@ -15,7 +15,7 @@ Apache 2.0
 */
 const app = require('app');
 
-async function compile_all(conf = {}) {
+function compile_all(conf = {}) {
   const queries = [`
     -------------------------------------------------------------------------------
     -- WARNING: these queries are machine-generated. Any changes that you make   --
@@ -37,13 +37,6 @@ async function compile_all(conf = {}) {
 module.exports = compile_all;
 
 if (require.main === module) {
-  async function run_queries(conf) {
-    const queries = await compile_all(conf);
-    for (let sql of queries) {
-      if (conf.verbose) console.log(sql);
-      if (conf.dryrun) continue;
-      await app.query(sql);
-    }
-  }  
-  run_queries(app.conf());
+  (async () => { for (let sql of module.exports(app.conf())) await app.query(sql); })()
 }
+

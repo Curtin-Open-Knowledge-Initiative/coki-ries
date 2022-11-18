@@ -66,16 +66,16 @@ function compile_all() {
   const sqls = [];
   ['world','local'].forEach(scope => 
     [4,2].forEach(digits => {
-      sqls.push({ ...args, scope, digits, institution: true, field: true, year: true });
-      sqls.push({ ...args, scope, digits, institution: true, field: true, year:false });
-      sqls.push({ ...args, scope, digits, institution: true, field:false, year: true });
-      sqls.push({ ...args, scope, digits, institution:false, field: true, year: true });
-      sqls.push({ ...args, scope, digits, institution: true, field:false, year:false });
-      sqls.push({ ...args, scope, digits, institution:false, field: true, year:false });
-      sqls.push({ ...args, scope, digits, institution:false, field:false, year: true });
+      sqls.push(compile({ ...args, scope, digits, institution: true, field: true, year: true }));
+      sqls.push(compile({ ...args, scope, digits, institution: true, field: true, year:false }));
+      sqls.push(compile({ ...args, scope, digits, institution: true, field:false, year: true }));
+      sqls.push(compile({ ...args, scope, digits, institution:false, field: true, year: true }));
+      sqls.push(compile({ ...args, scope, digits, institution: true, field:false, year:false }));
+      sqls.push(compile({ ...args, scope, digits, institution:false, field: true, year:false }));
+      sqls.push(compile({ ...args, scope, digits, institution:false, field:false, year: true }));
     })
   );
-  return sql;
+  return sqls;
 }
 module.exports = { compile, compile_all };
 

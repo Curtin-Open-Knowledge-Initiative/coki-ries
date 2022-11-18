@@ -48,13 +48,5 @@ async function get_user_input() {
 module.exports = compile_report_institution;
 
 if (require.main === module) {
-  async function run_queries(conf) {
-    const queries = await compile_report_institution(conf);
-    for (let sql of queries) {
-      if (conf.verbose) console.log(sql);
-      if (conf.dryrun) continue;
-      await app.query(sql);
-    }
-  }  
-  run_queries(app.conf());
+  (async () => { for (let sql of module.exports(app.conf())) await app.query(sql); })()
 }

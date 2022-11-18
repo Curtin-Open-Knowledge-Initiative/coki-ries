@@ -13,8 +13,8 @@ const lib_file = require('./libraries/lib_file');
 const lib_json = require('./libraries/lib_json');
 const lib_str  = require('./libraries/lib_string');
 const lib_type = require('./libraries/lib_is');
+const lib_cli  = require('./libraries/lib_cli'); // TODO: remove docopt dependency
 const cache    = require('./libraries/lib_cache');
-const docopt   = require('docopt');  // TODO: remove dependency
 const shelljs  = require('shelljs'); // TODO: remove dependency
 shelljs.config.silent = true;
 
@@ -23,9 +23,9 @@ const err = (...s) => !!console.error((new Date()).toTimeString().split(' ')[0],
 const msg = (...s) => app.conf.query_args.verbose ? log(...s) : false;
 const out = (...s) => !console.log(...s);
 
-const version = '1.0.0';
 const homedir = lib_file.resolve(__dirname,'../');
 const datadir = lib_file.resolve(__dirname,'../data');
+const docfile = lib_file.resolve(__dirname,'../docs/usage.md'); // documentation for the CLI may be found here
 cache.set_home(datadir);
 
 if (!shelljs.which('curl'))  err('this app requires curl to be available at the command line');
@@ -96,8 +96,21 @@ function save(data='', ...relparts) {
 function plot() {}
 
 // run a given function using the CLI settings with an optional override and additional params
-async function cli_run(func, overrides, ...extras) {
-  return await func(args_assign(args_app, overrides), ...extras);
+async function cli_run(func='', overrides={}, ...extras) {
+  const args = conf(overrides);
+  if (!func) {
+    const funcname = args.funcname ?? args._args?.[0] ?? '';
+    if (!funcname) {
+      return;
+      //return err('please specify which command you want to call');
+    }
+    const file = resolve(`code/utilities/${funcname}.js`);
+    if (!exists(file)) {
+      return err('could not find specified utility',file);
+    }
+    func = require(file);
+  }
+  return await func(args, ...extras);
 }
 async function cli_query_exec(generator,args={}) {
   await generator({...conf(),...args});
@@ -196,26 +209,25 @@ const conf = new function() {
 
   // parse args from command line variables
   function args_get_from_cli() {
+    return require.main === module ? args_get_from_cli_docopt() : args_get_from_cli_simple();
+  }
+  function args_get_from_cli_docopt() {
     try {
-      const docs = lib_str.get_between(load('code/utilities/README.md'),'```docs', '```').trim();
+      const docs = lib_str.get_between(load(docfile),'```docs', '```').trim();
       const usage = lib_str.get_between(docs,"Usage:", "cli [options]", true, true);
-      const opts = docopt.docopt(docs,{version,help:true,exit:false});
-      const args = {};
-      for (let [k,v] of Object.entries(opts)) {
-        if (!v) continue;
-        k = k.toLowerCase();
-        if      ( k.startsWith('--')) { args[k.substring(2)]            = v; }
-        else if ( k.startsWith('<'))  { args[k.substring(1,k.length-1)] = v; }
-        else if (!k.startsWith('-'))  { args.funcname                   = k; }
-      }
-      return args;
+      return lib_cli.parse_args_docopt(docs);
     }
     catch (e) {
       console.log(e.message);
       return {};
     }
   }
-
+  function args_get_from_cli_simple() {
+    const {named,unnamed} = lib_cli.parse_args();
+    named._args = unnamed;
+    return named;
+  }
+  
   // get the final args
   const args_base = args_get_default();
   const args_file = args_get_from_file(); // settings from the conf file override the defaults
@@ -229,6 +241,7 @@ const conf = new function() {
     const args = Object.assign({}, args_base, args_file, args_cli, overrides);
     args.ns_core = `${args.project}.${args.dataset}`;
     args.ns_inst = `${args.project}.${args.dataset}_inst`;
+    if (args.debug) console.log(args);
     return verify(args) ? args : null;
   }
 }
@@ -243,7 +256,6 @@ module.exports = {
   conf
 };
 
-// launch the CLI if invoked from the command line
 if (require.main === module) {
-  //require('./utilities/cli')();
+  cli_run();
 }

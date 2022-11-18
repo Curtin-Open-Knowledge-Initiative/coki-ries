@@ -1,10 +1,10 @@
 # Installation
 
-The application can be run from a Docker container or installed locally. Either way, it will require access to BigQuery. You do not need to clone this repo from GitHub to run the application.
+The application can be run from a Docker container or installed locally. Either way, you will need access to BigQuery if you wish to build the database. You do not need to clone this repo from GitHub to run the application.
 
 ## Obtain a BigQuery Keyfile
 
-This application requires access to an existing [Google BigQuery][google_bigquery] instance via a [credentials keyfile][google_keyfile]. Keyfiles can be exported from [Google Cloud IAM][google_iam]; contact your GCloud administrator for assistance.
+NOTE: if you only want to compile/print SQL queries then you can skip this section. However, if you wish to execute queries and build a database then the application requires access to an existing [Google BigQuery][google_bigquery] instance via a [credentials keyfile][google_keyfile]. Contact your GCloud administrator too assist you in exporting an access keyfile from [Google Cloud IAM][google_iam].
 
 For security, your administrator is advised to create a new project for this application to use. Within the project, the following permissions should be assigned:
 
@@ -17,7 +17,7 @@ For security, your administrator is advised to create a new project for this app
 * bigquery.tables.update
 * bigquery.jobs.create
 
-Once you have your keyfile, store it in a safe location outside the project directory (to avoid accidentally committing it to version control). The keyfile should be in JSON format and look something like this:
+Once you have your keyfile, store it in a safe location outside the project directory (to avoid accidentally committing it to version control). The keyfile should be in JSON format and should look something like this:
 
 ```json
 {
@@ -52,7 +52,7 @@ curl https://storage.googleapis.com/rt-era-public/code/release/ries/install_nix.
 bash install.bash /path/to/your/keyfile.json
 ```
 
-## Option 3 - Manual Install
+## Option 3 - Manual Setup - Native
 
 Substitute `apk` for your package manager (eg `brew` on OS X)
 
@@ -84,7 +84,7 @@ npm run ping
 npm run cli -- compile_all
 ```
 
-## Option 4 - Docker
+## Option 4 - Manual Setup - Docker
 
 Check that you have docker available at the command line: `which docker && docker--version`. You do not have to clone this repo to run the app with docker.
 

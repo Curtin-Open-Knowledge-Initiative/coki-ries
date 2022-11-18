@@ -8,6 +8,7 @@ julian.tonti-filippini@curtin.edu.au
 ## License
 Apache 2.0
 */
+const app = require('app');
 const lib_file = require('../libraries/lib_file');
 const lib_meta = require('../libraries/lib_meta');
 const print_table = require('../libraries/lib_console');
@@ -29,4 +30,6 @@ function print() {
 }
 module.exports = print, build;
 
-if (require.main === module) print();
+if (require.main === module) {
+  app.cli_run(print);
+}

@@ -39,13 +39,5 @@ function compile_raw(conf={}) {
 module.exports = compile_raw;
 
 if (require.main === module) {
-  async function run_queries(conf) {
-    const queries = compile_raw(conf);
-    for (let sql of queries) {
-      if (conf.verbose) console.log(sql);
-      if (conf.dryrun) continue;
-      await app.query(app.link_dest,sql);
-    }
-  }  
-  run_queries(app.conf());
+  (async () => { for (let sql of module.exports(app.conf())) await app.query(sql); })()
 }

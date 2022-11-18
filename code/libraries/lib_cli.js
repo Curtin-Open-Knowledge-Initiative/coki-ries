@@ -15,30 +15,57 @@ const docopt = require('docopt');
 
 // parse command line arguments with docopt
 function parse_args_docopt(docs) {
-  const opts = docopt(docs,{
-    version: docs.match(/version:(.*)\n/i)?.[1].trim() ?? '1.0'
+  const opts = docopt.docopt(docs,{
+    version: docs.match(/version:(.*)\n/i)?.[1].trim() ?? '1.0',
+    help : true,
+    exit : false,
   });
   const args = {};
-
   for (let [k,v] of Object.entries(opts)) {
-    if (k.startsWith('--')) k = k.substring(2);
-    if (k.startsWith('<') && k.endsWith('>')) k = k.substring(1,k.length-1);
-    args[k] = v;
+    if (!v) continue;
+    k = k.toLowerCase();
+    if      ( k.startsWith('--')) { args[k.substring(2)]            = v; }
+    else if ( k.startsWith('<'))  { args[k.substring(1,k.length-1)] = v; }
+    else if (!k.startsWith('-'))  { args.funcname                   = k; }
   }
   return args;
 }
 
-// parse command line arguments (not using docopt)
-function parse_args(args=process.argv.slice(2)) {
-  return Object.fromEntries(args.map(kp => {
-    let [k,v] = kp.split('=');
-    if (k.startsWith('--')) k = k.substring(2);
-    if (v !== undefined) {
-      try   { v = JSON.parse(v); }
-      catch { v = JSON.parse(`"${v}"`); }
+// parse command line arguments into a dict of named args, and an array of unnamed args
+function parse_args(args = process.argv.slice(2)) {
+  const named = {};
+  const unnamed = [];
+   
+  let key = null;
+  let val = null;
+
+  function push() {
+    if (key !== null || val !== null) {
+      if (val === null) val = true;
+      try   { val = JSON.parse(    val   ); }
+      catch { val = JSON.parse(`"${val}"`); }
+      key === null ? unnamed.push(val) : named[key] = val;
+      key = null;
+      val = null;
     }
-    return [k,v];
-  }));
+  }
+  for (let arg of args) {
+    if (arg.startsWith('-')) {
+      push();
+      key = arg.substring(arg.startsWith('--') ? 2 : 1);
+      if (key.includes('=')) {
+        val = key.substring(key.indexOf('=') + 1);
+        key = key.substring(0, key.indexOf('='));
+        push();
+      }
+    }
+    else {
+      val = arg;
+      push();
+    }
+  };
+  push();
+  return {named,unnamed};
 }
 
 // lightly verify and assign command line arguments from a default object
@@ -60,60 +87,48 @@ module.exports = { parse_args, parse_args_docopt, verify_args };
 
 // test
 if (require.main === module) {
-  let docs = load_docs('../utilities/README.md');
-  let args = parse_args();
-  let defs = {
-    n : 1,
-    s : 'string',
-    t : true,
-    f : false,
-    a : [1,2,3],
-    o : {n:1,s:'str'}
-  };
-  console.log(args);
-  let [err,safe] = verify_args(args,defs);
-  if (err) {
-    console.error('ERROR: this command line parameter is not set correctly:',err);
+  
+  function test1() {
+    let docs = load_docs('../utilities/README.md');
+    let args = parse_args();
+    let defs = {
+      n : 1,
+      s : 'string',
+      t : true,
+      f : false,
+      a : [1,2,3],
+      o : {n:1,s:'str'}
+    };
+    console.log(args);
+    let [err,safe] = verify_args(args,defs);
+    if (err) {
+      console.error('ERROR: this command line parameter is not set correctly:',err);
+    }
+    console.log(safe);
+    // node lib_cli.js n=1 s='str' t=true f=false a=[1,2,3] o='{"n":1,"s":"str","v":true}'
   }
-  console.log(safe);
-  // node lib_cli.js n=1 s='str' t=true f=false a=[1,2,3] o='{"n":1,"s":"str","v":true}'
+
+  function test2() {
+    const args = [
+      'blah',
+      'second',
+      '--ifile',
+      'a',
+      '--ofile=b',
+      'asdf',
+      '--last',
+      '[1, 2, 3, 4]',
+      '-v',
+      'true',
+      'false',
+      `{"a":1}`,
+      '-x',
+      'false',
+      '-y',
+      '-z='
+    ];
+    console.log(args.join(' '));
+    console.log(parse_args(args));
+  }
+  test2();
 }
-
-
-// // test
-// if (require.main === module) {
-//   const docs = `
-//     Title: Some Program
-    
-//     Version: v1.0.1
-    
-//     Decription: A program that does stuff
-    
-//     Usage:
-//       program tcp <host> <port> [--timeout=40]
-//       program serial <port> [ --baud=9600 ] [--timeout=40]
-//       program -h | --help | --version
-    
-//     Examples:
-    
-//     Options:
-//       -t,--timeout=X  time out in seconds.
-//       -b,--baud=X     baud rate [default: 70000].
-//   `;
-//   const api = {
-//     tcp    : ({host='localhost', port='80', timeout='30'}) => console.log('tcp', host, +port, +timeout),
-//     serial : ({port='80', baud='9600', timeout='30'}) => console.log('serial', +port, +baud, +timeout),
-//   };
-//   process_cli(docs,api);
-// }
-
-// function repeat(n,f) {
-//   for (let i=0; i<n; ++i) f();
-// }
-
-// const api = {
-//   echo   : (str) => console.log(str),
-//   repeat : (str,int) => repeat(int, () => api.echo(str)),
-//   exec   : (str) => process.exec(str),
-//   random : ({min=0, max=1, places=3}) => api.echo((Math.random() * (max-min) + min).toFixed(places)),
-// }

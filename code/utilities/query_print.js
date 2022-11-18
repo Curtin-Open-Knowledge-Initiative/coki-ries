@@ -17,7 +17,7 @@ function print({id}) {
     files[i] = f;
   });
   if (files[id]) {
-    require(files[id]).compile(app.conf());
+    require(files[id]).compile_all().forEach(sql => console.log(sql));
   }
   else {
     require('./query_list')();
@@ -27,5 +27,5 @@ function print({id}) {
 module.exports = print;
 
 if (require.main === module) {
-  print({id:process.argv[2]});
+  app.cli_run(print);
 }

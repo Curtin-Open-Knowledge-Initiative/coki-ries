@@ -32,7 +32,7 @@ If no settings are provided by the user then these are the baseline defaults:
 ```js
 {
   "keyfile" : "../setup/.keyfile.json",
-  "bucket"  : "rt-era-public",
+  "bucket"  : "gs://rt-era-public",
   "project" : "<read_from_keyfile>",
   "dataset" : "ries_demo",
   "replace" : false,
