@@ -1,6 +1,103 @@
 # Usage
 
-CLI instructions
+If using docker, you can either invoke a command directly or enter an interactive container:
+
+```bash
+
+# single-use invocation (in this case print help)
+docker run --rm -it coki-ries node . --help
+
+# interactive container
+docker run --rm -it coki-ries sh
+node . --help
+exit
+
+# for certain commands, you may want to bind-mount a keyfile, config file and/or data directory
+docker run --rm -it --name coki-ries \
+  --volume /your/config.json:/app/setup/.config.json \
+  --volume /your/keyfile.json:/app/setup/.keyfile.json \
+  --volume /your/datadir:/app/data \
+coki-ries sh
+
+```
+
+## Examples
+
+These examples assume that you've either installed the app locally, or you're running from within an interactive Docker container, and that you're in the app's root directory:
+
+```bash
+# print short help information (usage)
+node .
+
+# print full help information
+node . -h
+
+# print the current configuration (default + file + cli)
+node . config_print
+
+# see the effect of providing config options at the command line
+node . config_print \
+  --test1 "value" \
+  --test2 false \
+  --test3 \
+  --test4 100 \
+  --test5 [1,2,3] \
+  --test6 '"[1,2,3]"' \
+  --test7 '{"key":"value"}' \
+a b c 1 2 3
+
+# test if the app can connect to a BigQuery database
+node . config_test
+
+# test if the app can connect using a keyfile and dataset that you provide with the command
+node . config_test --keyfile=/my/keyfile.json --dataset='my-dataset'
+
+# example changing all core config options
+node . config_print \
+  --keyfile /path/to/my/keyfile.json \
+  --bucket 'gs://coki-bucket' \
+  --project 'MY-PROJECT' \
+  --dataset 'MY-DATASET' \
+  --replace true \
+  --verbose false \
+  --dryrun   \
+  --docache  \
+  --debug   true
+  --start 1900,
+  --finish 2020,
+  --rorcode 'https://www.ror.org/my-inst-code'
+
+# get a list of individual queries (by ID and name)
+node . query_list
+
+# compile and print SQL for a specific query (by ID or name)
+node . query_print 25
+node . query_print raw_journals
+
+# invoke a specific SQL query (by ID or name, don't forget to add required parameters if needed)
+node . query_exec 21
+node . query_exec ping
+
+# show workflow diagrams
+node . plot_workflow
+node . plot_workflow_core
+
+# compile all SQL and print it out (--verbose) without executing it (--dryrun)
+node . compile_all --dryrun --verbose
+
+# build the whole database using settings from a custom config file
+node . compile_all --config /my/config.json
+
+# generate output tables for a specific institutino
+node . analyse_institution --replace --rorcode='https://ror.org/02n415q13'
+
+# generate analysis for a particular time frame
+node . analyse_era --start=2011 --finish=2016
+```
+
+## Command Line Interface
+
+Access the CLI instructions by running `node . --help` from within the project directory or, explicitly `node /path/to/app.js --help`
 
 ```docs
 
@@ -142,11 +239,16 @@ test_config
   Check if the default config is valid and the app can connect to your database.
 ```
 
-## Examples
+## Compiling Queries
+
+Each of the queries in `/code/queries` can be invoked directly at the command line instead of using the main CLI. Unless overridden by the user (file or CLI), the default behaviour is to print the SQL but not run it.
 
 ```bash
-cd this_app
-node . compile_all --project='my-project' --dryrun=true --silent=false
-node . report --replace=true --start=2011 --finish=2016
-node . report_institution --replace=true --ror_url='https://ror.org/02n415q13'
+# these are equivalent for printing a query
+node . query_print benchmark_cpp
+node code/queries/benchmark_cpp --verbose=true --dryrun=true
+
+# these are equivalent for running a query
+node . query_exec benchmark_cpp
+node code/queries/benchmark_cpp --verbose=true --dryrun=false
 ```

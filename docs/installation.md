@@ -1,12 +1,74 @@
 # Installation
 
-The application can be run from a Docker container or installed locally. Either way, you will need access to BigQuery if you wish to build the database. You do not need to clone this repo from GitHub to run the application.
+The application requires either [Docker] or [NodeJS] with various command line tools. If you wish to run queries and build an online database then you will also require access to a [Google BigQuery][BigQuery] instance (details below).
 
-## Obtain a BigQuery Keyfile
+## Option 1 - install with docker
 
-NOTE: if you only want to compile/print SQL queries then you can skip this section. However, if you wish to execute queries and build a database then the application requires access to an existing [Google BigQuery][google_bigquery] instance via a [credentials keyfile][google_keyfile]. Contact your GCloud administrator too assist you in exporting an access keyfile from [Google Cloud IAM][google_iam].
+Requirements: docker
 
-For security, your administrator is advised to create a new project for this application to use. Within the project, the following permissions should be assigned:
+```bash
+# pull the latest image and test a container by printing the help
+docker run --rm observatoryacademy/coki-ries:latest node . ?
+
+# OPTIONAL: tag the image for easier reference
+docker tag observatoryacademy/coki-ries:latest ries
+
+# OPTIONAL: bind mount your keyfile (see below) and test the connection
+docker run --rm \
+  --volume /path/to/your/keyfile:/app/setup/.keyfile.json \
+ries node . config_test
+```
+
+## Option 2 - install with bash script (unix-like systems)
+
+Requirements: curl, bash
+
+```bash
+# get the script
+curl https://raw.githubusercontent.com/Curtin-Open-Knowledge-Initiative/coki-ries/main/setup/install_nix.bash -o install.bash 
+
+# run it (keyfile is optional)
+bash install.bash [<path_to_keyfile>]
+```
+
+## Option 3 - install manually (unix-like systems)
+
+Requirement: a CLI package manager such as apk, apt or brew.
+
+```bash
+# change this to suit the package management for your *nix variant (brew, rpm, apt, etc)
+apk update
+apk upgrade
+apk add git unzip curl nodejs npm
+
+# clone the repo and enter the directory
+git clone https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries
+cd coki-ries
+
+# install node dependencies
+npm install -g pnpm
+pnpm install
+pnpm audit
+
+# test by printing the help
+node . ?
+
+# OPTIONAL: symlink your keyfile and test the connection
+ln -s /path/to/your/keyfile.json setup/.keyfile.json
+node . config_test
+
+# OPTIONAL: create your own default configuration
+cp setup/example_config.json setup/.config.json
+nano setup/.config.json
+```
+
+## Obtain a BigQuery keyfile (optional)
+
+Skip this section if you do not intend to build a demo database instance.
+
+To build a database, the application requires access an existing [BigQuery] instance via a [credentials keyfile][keyfile]. Contact your GCloud administrator to assist you in exporting a keyfile from [Google Cloud IAM][IAM] then store it in a safe place.
+
+For security, it is advisable to create a new project for this application to use. Within the project's scope, the following permissions should be assigned to a role or application user:
 
 * storage.buckets.get
 * storage.objects.get
@@ -17,7 +79,7 @@ For security, your administrator is advised to create a new project for this app
 * bigquery.tables.update
 * bigquery.jobs.create
 
-Once you have your keyfile, store it in a safe location outside the project directory (to avoid accidentally committing it to version control). The keyfile should be in JSON format and should look something like this:
+Once you have your [keyfile], store it in a safe location outside the project directory (to avoid accidentally committing it to version control). You can symlink it to a local installation, or bind-mount it to a docker container. The [keyfile] should be in [JSON] format and should look something like this:
 
 ```json
 {
@@ -34,106 +96,28 @@ Once you have your keyfile, store it in a safe location outside the project dire
 }
 ```
 
-## Option 1 - Docker + install script
+## Create a default configuration file (optional)
 
-Requirements: keyfile.json, bash, curl, docker
-
-```bash
-curl https://storage.googleapis.com/rt-era-public/code/release/ries/install_docker.bash -o install.bash
-bash install.bash /path/to/your/keyfile.json
-```
-
-## Option 2 - Unix-like system + install script
-
-Requirements: keyfile.json, bash, curl, nodejs, npm (an attempt will be made to auto-install these if missing)
+Skip this section if you're happy to define options at the command line, or if the default configuration values are acceptable (see [configuration] for more information)
 
 ```bash
-curl https://storage.googleapis.com/rt-era-public/code/release/ries/install_nix.bash -o install.bash
-bash install.bash /path/to/your/keyfile.json
+echo '{
+  "keyfile" : "your-keyfile",
+  "project" : "your-project",
+  "dataset" : "your_dataset",
+  "replace" : false,
+  "verbose" : false,
+  "dryrun"  : false
+  "start"   : 1500,
+  "finish"  : 2200,
+  "rorcode" : "https://ror.org/02n415q13"
+}' >> config.json
 ```
 
-## Option 3 - Manual Setup - Native
-
-Substitute `apk` for your package manager (eg `brew` on OS X)
-
-```bash
-# change this to suit the package management for your *nix variant (brew, rpm, apt, etc)
-apk update && apk upgrade
-apk add unzip curl git nano nodejs npm
-
-# set to your desired install location
-DIR=~/ries
-mkdir -p $DIR && cd $DIR
-curl https://storage.googleapis.com/rt-era-public/code/release/ries/latest.zip -o code.zip
-unzip code.zip && rm code.zip
-
-# install node dependencies
-npm install -g pnpm && pnpm install && pnpm audit
-
-# after exporting a credentials file from your BigQuery console, link it in
-ln -s /your/bigquery/keyfile.json setup/.keyfile.json
-
-# set up your default config file
-cp setup/example_config.json setup/.config.json
-nano setup/.config.json
-
-# test your configuration
-npm run ping
-
-# compile everything
-npm run cli -- compile_all
-```
-
-## Option 4 - Manual Setup - Docker
-
-Check that you have docker available at the command line: `which docker && docker--version`. You do not have to clone this repo to run the app with docker.
-
-Create a local working directory with the directories and files you'll want to mount into the container.
-
-```bash
-mkdir ries && cd ries
-mkdir conf data
-
-# symlink your keyfile
-ln -s /your/keyfile.json ./conf/.keyfile.json
-
-# set up your default config
-curl https://storage.googleapis.com/rt-era-public/code/release/ries/example_config.json -o conf/.config.json
-nano conf/.config.json
-
-# OPTIONAL: download some docker helpers
-curl https://storage.googleapis.com/rt-era-public/code/release/ries/setup/docker_build.bash
-curl https://storage.googleapis.com/rt-era-public/code/release/ries/setup/docker_start.bash
-```
-
-Now you can build the image and launch containers, mounting in your directories.
-
-If you downloaded the docker helpers:
-
-```bash
-bash docker_build.bash     # build the image
-bash docker_start.bash     # launch a container
-npm run ping               # test connection
-npm run cli -- compile_all # build the database
-exit
-```
-
-If you did not download the helpers, run the docker commands manually:
-
-```bash
-# build the image (named coki:latest)
-docker build --tag coki:latest --no-cache .
-
-# enter the container and build the database (data bindmount is optional)
-docker run --rm \
-  --volume ${PWD}/conf:/app/setup \
-  --volume ${PWD}/data:/app/data \
-coki:latest sh
-npm run ping
-npm run cli -- compile_all
-exit
-```
-
-[google_bigquery]: <https://cloud.google.com/bigquery>
-[google_iam]: <https://cloud.google.com/iam>
-[google_keyfile]: <https://cloud.google.com/bigquery/docs/authentication/service-account-file>
+[Docker]: <https://www.docker.com/>
+[NodeJS]: <https://nodejs.org/en/download/>
+[BigQuery]: <https://cloud.google.com/bigquery/>
+[IAM]: <https://cloud.google.com/iam>
+[keyfile]: <https://cloud.google.com/bigquery/docs/authentication/service-account-file>
+[JSON]: <https://www.json.org/json-en.html>
+[configuration]: <configuration.md>

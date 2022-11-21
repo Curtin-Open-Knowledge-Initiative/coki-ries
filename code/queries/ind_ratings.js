@@ -30,7 +30,6 @@ table rci_scores_*
 table ratings_*
 
 */
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   scope   = 'world',
@@ -160,12 +159,11 @@ BEGIN
   );
 END;
 `;
-const compile_all = () => [ 
-  compile({ ...app.conf(), scope:'world', digits:4 }),
-  compile({ ...app.conf(), scope:'world', digits:2 }),
-  compile({ ...app.conf(), scope:'local', digits:4 }),
-  compile({ ...app.conf(), scope:'local', digits:2 }),
+const compile_all = (args={}) => [ 
+  compile({ ...args, scope:'world', digits:4 }),
+  compile({ ...args, scope:'world', digits:2 }),
+  compile({ ...args, scope:'local', digits:4 }),
+  compile({ ...args, scope:'local', digits:2 }),
 ];
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

@@ -11,7 +11,6 @@ Apache 2.0
 ## Creates
 table raw_papers
 */
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   bucket  = 'gs://rt-era-public',
@@ -34,7 +33,6 @@ BEGIN
   );
 END;
 `;
-const compile_all = () => [ compile(app.conf()) ];
+const compile_all = (args={}) => [ compile(args) ];
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

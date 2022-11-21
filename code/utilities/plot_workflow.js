@@ -22,7 +22,7 @@ function compile() {
   return str;
 }
 
-if (require.main === module) {
+function render() {
   const mer_text   = compile();
   const ofile_plot = lib_file.resolve(__dirname,'../../docs/workflow.html');
   const ofile_repo = lib_file.resolve(__dirname,'../../docs/workflow.md');
@@ -32,3 +32,5 @@ if (require.main === module) {
 
   require('shelljs').exec(`open ${ofile_plot}`);
 }
+module.exports = render;
+if (require.main === module) render();

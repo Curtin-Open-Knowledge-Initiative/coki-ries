@@ -11,14 +11,12 @@ julian.tonti-filippini@curtin.edu.au
 ## License
 Apache 2.0
 */
-const app = require('app');
-
-async function compile_report_topic(conf={}) {
+function compile_report_topic(conf={}) {
   console.log('NOT IMPLEMENTED YET');
   return [];
 
   const report_topic = require('../queries/report_topic').compile;
-  const {name,code} = await get_user_input();
+  //const {name,code} = await get_user_input();
   const queries = [`
     -------------------------------------------------------------------------------
     -- WARNING: these queries are machine-generated. Any changes that you make   --
@@ -53,17 +51,4 @@ async function get_user_input() {
   return {name,code};
 }
 module.exports = compile_report_topic;
-
-if (require.main === module) {
-  console.log('NOT IMPLEMENTED YET');
-  process.exit();
-  async function run_queries(conf) {
-    const queries = compile_report_topic(conf);
-    for (let sql of queries) {
-      if (conf.verbose) console.log(sql);
-      if (conf.dryrun) continue;
-      await app.query(app.link_dest,sql);
-    }
-  }  
-  run_queries(app.conf());
-}
+if (require.main === module) require('app').cli_compile(module.exports);

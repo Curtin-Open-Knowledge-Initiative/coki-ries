@@ -23,7 +23,6 @@ table rci_classes_fields
 table rci_classes_summary
 */
 // TODO: add grouping support and refactor table names
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   scope   = 'world',
@@ -170,7 +169,6 @@ BEGIN
   );
   UPDATE \`${ns_core}.rci_classes_summary\` SET rci_ratio = IF(rci_low=0, rci_high, rci_high / rci_low) WHERE true;
 END;`;
-const compile_all = () => [ compile(app.conf()) ];
+const compile_all = (args={}) => [ compile(args) ];
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

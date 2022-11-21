@@ -16,7 +16,6 @@ table core_issnls
 table xref_issn_issnl
 
 */
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   replace = false,
@@ -52,8 +51,6 @@ BEGIN
   ALTER COLUMN issn  SET OPTIONS (description="ISSN value associated with the linking ISSN");
 END;
 `;
-const compile_all = () => [ compile(app.conf()) ];
+const compile_all = (args={}) => [ compile(args) ];
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
-
+if (require.main === module) require('app').cli_compile(compile_all);

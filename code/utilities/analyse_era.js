@@ -11,9 +11,7 @@ julian.tonti-filippini@curtin.edu.au
 ## License
 Apache 2.0
 */
-const app = require('app');
-
-async function compile_report_heps(conf={}) {
+function compile_report_heps(conf={}) {
   console.log('NOT IMPLEMENTED YET');
   return [];
 
@@ -31,17 +29,4 @@ async function compile_report_heps(conf={}) {
   return queries;
 }
 module.exports = compile_report_heps;
-
-if (require.main === module) {
-  console.log('NOT IMPLEMENTED YET');
-  process.exit();
-  async function run_queries(conf) {
-    const queries = await compile_report_heps(conf);
-    for (let sql of queries) {
-      if (conf.verbose) console.log(sql);
-      if (conf.dryrun) continue;
-      await app.query(app.link_dest,sql);
-    }
-  }  
-  run_queries(app.conf());
-}
+if (require.main === module) require('app').cli_compile(module.exports);

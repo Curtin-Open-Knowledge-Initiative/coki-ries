@@ -10,16 +10,16 @@ Apache 2.0
 */
 const app = require('app');
 
-async function exec({id='ping'}) {
+async function exec({id='',_args=[]}) {
+  if (!id) id = _args.pop();
   const files = {};
   app.file.ls_files(`${__dirname}/../queries`).filter(s => s.endsWith('.js')).sort().forEach((f,i) => {
     files[app.file.base(f)] = f;
     files[i] = f;
   });
   if (files[id]) {
-    let sql = require(files[id]).compile_all().join("\n");
-    let [err,res] = await app.query(sql);
-    err ? console.error(err) : console.log(res);
+    const func = require(files[id]).compile_all;
+    await app.cli_compile(func, { verbose:true, dryrun:false });
   }
   else {
     require('./query_list')();

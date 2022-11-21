@@ -21,7 +21,6 @@ table core_papers
 table benchmarks_centiles_*
 table centiles_tallies_*
 */
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   scope   = 'world',
@@ -89,8 +88,7 @@ BEGIN
   );
 END;
 `;
-function compile_all() {
-  const args = app.conf();
+function compile_all(args={}) {
   return [
     compile({ ...args, scope:'world', digits:4 }),
     compile({ ...args, scope:'world', digits:2 }),
@@ -99,5 +97,4 @@ function compile_all() {
   ];
 }
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

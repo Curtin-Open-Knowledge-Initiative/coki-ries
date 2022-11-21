@@ -18,7 +18,6 @@ table research_outputs_base
 ## Creates
 table publishing_profile_*
 */
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   scope   = 'world',
@@ -70,21 +69,20 @@ BEGIN
   SELECT 'test', COUNT(1) AS total, ${group.map(g => `COUNT(DISTINCT ${g}) AS num_${g}s`).join(',')} FROM ${table};
 END;
 `;}
-const compile_all = () => {
+const compile_all = (args={}) => {
   const sqls = [];
   ['world','local'].forEach(scope => 
     [4,2].forEach(digits => {
-      sqls.push(compile({ ...app.conf(), scope, digits, journal: true, field: true, year: true }));
-      sqls.push(compile({ ...app.conf(), scope, digits, journal: true, field: true, year:false }));
-      sqls.push(compile({ ...app.conf(), scope, digits, journal: true, field:false, year: true }));
-      sqls.push(compile({ ...app.conf(), scope, digits, journal:false, field: true, year: true }));
-      sqls.push(compile({ ...app.conf(), scope, digits, journal: true, field:false, year:false }));
-      sqls.push(compile({ ...app.conf(), scope, digits, journal:false, field: true, year:false }));
-      sqls.push(compile({ ...app.conf(), scope, digits, journal:false, field:false, year: true }));
+      sqls.push(compile({ ...args, scope, digits, journal: true, field: true, year: true }));
+      sqls.push(compile({ ...args, scope, digits, journal: true, field: true, year:false }));
+      sqls.push(compile({ ...args, scope, digits, journal: true, field:false, year: true }));
+      sqls.push(compile({ ...args, scope, digits, journal:false, field: true, year: true }));
+      sqls.push(compile({ ...args, scope, digits, journal: true, field:false, year:false }));
+      sqls.push(compile({ ...args, scope, digits, journal:false, field: true, year:false }));
+      sqls.push(compile({ ...args, scope, digits, journal:false, field:false, year: true }));
     })
   );
   return sqls;
 }
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

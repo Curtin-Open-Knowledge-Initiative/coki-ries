@@ -12,7 +12,7 @@ Apache 2.0
 const app = require('app');
 
 async function load_data(sql='') {
-  return await app.query(sql);
+  return ;//await app.query(sql);
 }
 
 async function draw_plot(type='indicator', data=[]) {
@@ -27,6 +27,5 @@ module.exports = render;
 if (require.main === module) {
   const type = 'indicator';
   const sql = 'select * from table';
-  //render(type,sql);
-  console.log('NOT YET IMPLEMENTED');
+  render(type,sql);
 }

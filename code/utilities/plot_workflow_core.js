@@ -43,7 +43,7 @@ OK7     -- "<p>Repeat process with a modified method</p>"         --> DIMS
 OK7     -- "<p>Report on changes between kernel methods</p>"      --> Z(END)
 `;
 
-if (require.main === module) {
+function render() {
   const ofile_plot = lib_file.resolve(__dirname,'../../docs/workflow_general.html');
   const ofile_repo = lib_file.resolve(__dirname,'../../docs/workflow_general.md');
   
@@ -52,3 +52,5 @@ if (require.main === module) {
 
   require('shelljs').exec(`open ${ofile_plot}`);
 }
+module.exports = render;
+if (require.main === module) render();

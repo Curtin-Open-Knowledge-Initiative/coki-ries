@@ -26,7 +26,6 @@ table benchmarks_rci_*
 ## Creates
 table benchmarks_summary_*
 */
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   digits  = 4,
@@ -105,10 +104,9 @@ BEGIN
   ALTER COLUMN static_c6   SET OPTIONS (description="RCI score upper limit for category 6 (static)");
 END;
 `;
-const compile_all = () => [ 
-  compile({ ...app.conf(), digits:4 }),
-  compile({ ...app.conf(), digits:2 }),
+const compile_all = (args={}) => [ 
+  compile({ ...args, digits:4 }),
+  compile({ ...args, digits:2 }),
 ];
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

@@ -15,8 +15,6 @@ julian.tonti-filippini@curtin.edu.au
 ## License
 Apache 2.0
 */
-const app = require('app');
-
 function compile_indicators(conf={}) {
   const low_volume  = require('../queries/ind_low_volume'        ).compile;
   const interdisc   = require('../queries/ind_interdisc'         ).compile;
@@ -60,7 +58,4 @@ function compile_indicators(conf={}) {
   return queries;
 }
 module.exports = compile_indicators;
-
-if (require.main === module) {
-  (async () => { for (let sql of module.exports(app.conf())) await app.query(sql); })()
-}
+if (require.main === module) require('app').cli_compile(module.exports);

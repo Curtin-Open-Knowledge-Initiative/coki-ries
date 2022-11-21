@@ -2,7 +2,7 @@
 
 Features to be added (in no order)
 
-- HTML indicator plots (d3)
+- HTML indicator plots (d3,vega)
 - HTML summary tables
 - PDF report output
 - User-defined topic sets (alternative to Field of Research)

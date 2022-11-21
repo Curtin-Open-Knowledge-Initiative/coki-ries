@@ -14,8 +14,6 @@ julian.tonti-filippini@curtin.edu.au
 ## License
 Apache 2.0
 */
-const app = require('app');
-
 function compile_benchmarks(conf={}) {
   const research_outputs   = require('../queries/benchmark_outputs'    ).compile;
   const benchmark_cpp      = require('../queries/benchmark_cpp'        ).compile;
@@ -86,8 +84,4 @@ function compile_benchmarks(conf={}) {
   return queries;
 }
 module.exports = compile_benchmarks;
-
-if (require.main === module) {
-  (async () => { for (let sql of module.exports(app.conf())) await app.query(sql); })()
-}
-
+if (require.main === module) require('app').cli_compile(module.exports);

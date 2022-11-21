@@ -15,7 +15,6 @@ table raw_forcodes
 table core_fors
 
 */
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   replace = false,
@@ -57,7 +56,6 @@ BEGIN
   FROM ${ns_core}.core_fors;
 END;
 `;
-const compile_all = () => [ compile(app.conf()) ];
+const compile_all = (args={}) => [ compile(args) ];
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

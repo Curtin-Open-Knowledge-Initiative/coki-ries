@@ -18,7 +18,6 @@ table core_papers
 table benchmarks_cpp_*
 
 */
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   scope   = 'world',
@@ -48,8 +47,7 @@ BEGIN
   );
   UPDATE \`${ns_core}.benchmarks_cpp_${scope}_${digits}\` SET benchmark = sum_citations / num_papers WHERE num_papers > 0;
 END;`;
-function compile_all() {
-  const args = app.conf();
+function compile_all(args={}) {
   return [
     compile({ ...args, scope:'world', digits:4 }),
     compile({ ...args, scope:'world', digits:2 }),
@@ -58,5 +56,4 @@ function compile_all() {
   ];
 }
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

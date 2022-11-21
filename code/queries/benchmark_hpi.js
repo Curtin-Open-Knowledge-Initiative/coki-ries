@@ -27,7 +27,6 @@ table research_outputs_*
 ## Creates
 table benchmarks_hpi_*
 */
-const app = require('app');
 const compile = ({
   ns_core   = 'project.dataset',
   digits    = 4,
@@ -90,13 +89,11 @@ BEGIN
   ALTER COLUMN benchmark        SET OPTIONS (description="The average CPP (citations per paper) for the top 10% of institutions");
 END;
 `;
-function compile_all() {
-  const args = app.conf();
+function compile_all(args={}) {
   return [
     compile({ ...args, digits:4, threshold:50 }),
     compile({ ...args, digits:2, threshold:50 }),
   ];
 }
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

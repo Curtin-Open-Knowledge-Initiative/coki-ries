@@ -11,8 +11,6 @@ julian.tonti-filippini@curtin.edu.au
 ## License
 Apache 2.0
 */
-const app = require('app');
-
 function compile_report_institution(conf={}) {
   const report_institution = require('../queries/report_institution').compile;
   // if (!conf.rorcode) {
@@ -46,7 +44,4 @@ async function get_user_input() {
   return {code};
 }
 module.exports = compile_report_institution;
-
-if (require.main === module) {
-  (async () => { for (let sql of module.exports(app.conf())) await app.query(sql); })()
-}
+if (require.main === module) require('app').cli_compile(module.exports);

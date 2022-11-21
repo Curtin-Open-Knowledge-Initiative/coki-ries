@@ -29,7 +29,6 @@ table rci_papers
 table benchmarks_rci_*
 */
 // TODO: implement the wildcard.
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   digits  = 4,
@@ -77,10 +76,9 @@ BEGIN
   );
 END;
 `;
-const compile_all = () => [ 
-  compile({ ...app.conf(), digits:4 }),
-  compile({ ...app.conf(), digits:2 }),
+const compile_all = (args={}) => [ 
+  compile({ ...args, digits:4 }),
+  compile({ ...args, digits:2 }),
 ];
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

@@ -30,7 +30,6 @@ table curtin_class_tallies_by_field_year
 table curtin_class_tallies_by_field
 table curtin_class_tallies_by_year
 */
-const app = require('app');
 const compile = ({
   ns_core   = 'project.dataset',
   ns_inst   = 'project.dataset',
@@ -554,7 +553,6 @@ BEGIN
   ALTER COLUMN s0            SET OPTIONS(description='number of papers with static RCI class 0 (uncited)');
 
 END;`;
-const compile_all = () => [ compile(app.conf()) ];
+const compile_all = (args={}) => [ compile(args) ];
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

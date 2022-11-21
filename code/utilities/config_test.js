@@ -11,20 +11,15 @@ Apache 2.0
 const app = require('app');
 
 async function test_connection(args={}) {
-  args = app.conf(args);
-  if (args.verbose) app.out('TESTING CONNECTION ->', args);
+  args = Object.assign(args,{dryrun:false,verbose:true});
+  app.out('TESTING CONNECTION ->', args);
   let [err,res] = await app.query('SELECT DISTINCT catalog_name FROM INFORMATION_SCHEMA.SCHEMATA', args);
-  if (args.verbose) (err 
-    ? app.out('FAILED ->', err.errors)
+  (err 
+    ? app.out('FAILED ->', err)
     : app.out('SUCCESS ->', res)
   );
   return [err,res];
 }
 module.exports = test_connection;
 
-if (require.main === module) {
-  test_connection({
-    dryrun  : false,
-    verbose : true,
-  });
-}
+if (require.main === module) test_connection(app.conf());

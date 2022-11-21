@@ -13,8 +13,6 @@ julian.tonti-filippini@curtin.edu.au
 ## License
 Apache 2.0
 */
-const app = require('app');
-
 function compile_all(conf = {}) {
   const queries = [`
     -------------------------------------------------------------------------------
@@ -35,8 +33,4 @@ function compile_all(conf = {}) {
   return queries;
 }
 module.exports = compile_all;
-
-if (require.main === module) {
-  (async () => { for (let sql of module.exports(app.conf())) await app.query(sql); })()
-}
-
+if (require.main === module) require('app').cli_compile(module.exports);

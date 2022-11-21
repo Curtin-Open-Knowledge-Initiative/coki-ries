@@ -1,0 +1,35 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+#mermaid_text {
+  resize    : vertical;
+  border    : solid black 1px;
+  min-height: 100px;
+  height    : 150px;
+  width     : 100%;
+  display   : inline-block; /* needed to stop editable from adding divs */
+}
+#mermaid_container {
+  width    : 100%;
+}
+#mermaid_plot {
+  width: 100%;
+  overflow : scroll;
+  border   : solid black 1px;
+}
+button {
+  margin-right: 8px;
+}
+div {
+  margin-bottom: 10px;
+}
+svg g p {
+  background-color:lightgray;
+  border-radius: 1em;
+  padding:0.5em 1em;
+  margin:0em;
+  max-width: 20em;
+  white-space: normal;
+  font-size: 1em;
+  display:block;
+}    

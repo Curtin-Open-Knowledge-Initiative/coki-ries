@@ -14,9 +14,6 @@ julian.tonti-filippini@curtin.edu.au
 ## License
 Apache 2.0
 */
-const app = require('app');
-
-// build the core tables
 function compile_raw(conf={}) {
   return [`
     -------------------------------------------------------------------------------
@@ -37,7 +34,4 @@ function compile_raw(conf={}) {
   ];
 }
 module.exports = compile_raw;
-
-if (require.main === module) {
-  (async () => { for (let sql of module.exports(app.conf())) await app.query(sql); })()
-}
+if (require.main === module) require('app').cli_compile(module.exports);

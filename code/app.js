@@ -20,7 +20,7 @@ shelljs.config.silent = true;
 
 const log = (...s) => !console.log((new Date()).toTimeString().split(' ')[0], '-', ...s);
 const err = (...s) => !!console.error((new Date()).toTimeString().split(' ')[0], '-', 'ERROR:', ...s);
-const msg = (...s) => app.conf.query_args.verbose ? log(...s) : false;
+const msg = (...s) => conf().verbose ? log(...s) : false;
 const out = (...s) => !console.log(...s);
 
 const homedir = lib_file.resolve(__dirname,'../');
@@ -93,30 +93,49 @@ function save(data='', ...relparts) {
 }
 
 // not implemented yet
-function plot() {}
+function plot() {
+  out('NOT YET IMPLEMENTED');
+}
 
-// run a given function using the CLI settings with an optional override and additional params
-async function cli_run(func='', overrides={}, ...extras) {
+// run a given function using the CLI settings with an optional override and additional params. If no function is provided, it will look for one in the args list
+async function cli_run(func=null, overrides={}, ...extras) {
   const args = conf(overrides);
+  const util = args._args[0]
+  if (args.help || args.h || args['?'] || util == '?') return cli_help();
+  if (args.usage || args.u) return cli_usage();
+  if (!func && !util) return cli_usage();
+  
+  // if no function has been provided, look for a matching utility
   if (!func) {
-    const funcname = args.funcname ?? args._args?.[0] ?? '';
-    if (!funcname) {
-      return;
-      //return err('please specify which command you want to call');
-    }
-    const file = resolve(`code/utilities/${funcname}.js`);
-    if (!exists(file)) {
-      return err('could not find specified utility',file);
-    }
+    const file = resolve(`code/utilities/${util}.js`);
+    if (!exists(file)) return cli_usage();
     func = require(file);
   }
-  return await func(args, ...extras);
+  let results = await func(args, ...extras);
+  if (args.verbose && results?.forEach) {
+    results.forEach(v => console.log(v));
+  }
 }
-async function cli_query_exec(generator,args={}) {
-  await generator({...conf(),...args});
+async function cli_compile(func,overrides={}) {
+  const args = conf(overrides);
+  const sqls = func(args);
+  
+  for (let sql of sqls) {
+    let [error,result] = await query(sql,args);
+    if (args.verbose) {
+      if (error) err(error);
+      if (result) out(result);
+    }
+  }
 }
-function dryrun(generator,args={}) {
-  out(generator({...conf(),...args,dryrun:true}));
+function cli_help() {
+  const docs = lib_str.get_between(load(docfile),'```docs', '```').trim();
+  out(docs);
+}
+function cli_usage() {
+  const docs = lib_str.get_between(load(docfile),'```docs', '```').trim();
+  const usage = lib_str.get_between(docs,"Usage:", "Options", true, false).trim();
+  out(usage);
 }
 
 // run a query with an option to use the cache
@@ -124,7 +143,7 @@ async function query(sql='', args={}) {
   args = conf(args);
 
   if (args.verbose) out(sql);
-  if (args.dryrun) return [null,[]];
+  if (args.dryrun) return [null,null];
   const link = lib_bigq.connect(args);
   
   if (!args.docache) {
@@ -160,8 +179,8 @@ const conf = new function() {
     dataset : { default: 'ries_demo'                   , test: types.term  , info: 'the BigQuery dataset-id that the application has permission to modify tables in' },
     bucket  : { default: 'gs://rt-era-public'          , test: types.bucket, info: 'address of the COKI Google Cloud Storage bucket where datafiles may be found'    },
     replace : { default: false                         , test: types.bool  , info: 'set to true to replace tables if they exist (or use the --replace CLI flag)'     },
-    verbose : { default: false                         , test: types.bool  , info: 'set to true to log most activity (or use the --verbose CLI flag)'                },
-    dryrun  : { default: false                         , test: types.bool  , info: 'set to true to print queries but not run them (or use the --dryrun CLI flag)'    },
+    verbose : { default: true                          , test: types.bool  , info: 'set to true to log most activity (or use the --verbose CLI flag)'                },
+    dryrun  : { default: true                          , test: types.bool  , info: 'set to true to print queries but not run them (or use the --dryrun CLI flag)'    },
     docache : { default: false                         , test: types.bool  , info: 'set to true to use a local cache for queries (avoids re-running)'                },
     debug   : { default: false                         , test: types.bool  , info: 'set to true to print some debugging information such as config settings'         },
     start   : { default: 2000                          , test: types.year  , info: 'years before this value will be excluded from the analysis'                      },
@@ -212,6 +231,8 @@ const conf = new function() {
     return require.main === module ? args_get_from_cli_docopt() : args_get_from_cli_simple();
   }
   function args_get_from_cli_docopt() {
+    return args_get_from_cli_simple();
+    /* deprecating -> removing dependence on docopt
     try {
       const docs = lib_str.get_between(load(docfile),'```docs', '```').trim();
       const usage = lib_str.get_between(docs,"Usage:", "cli [options]", true, true);
@@ -220,7 +241,7 @@ const conf = new function() {
     catch (e) {
       console.log(e.message);
       return {};
-    }
+    }*/
   }
   function args_get_from_cli_simple() {
     const {named,unnamed} = lib_cli.parse_args();
@@ -241,7 +262,7 @@ const conf = new function() {
     const args = Object.assign({}, args_base, args_file, args_cli, overrides);
     args.ns_core = `${args.project}.${args.dataset}`;
     args.ns_inst = `${args.project}.${args.dataset}_inst`;
-    if (args.debug) console.log(args);
+    if (args.debug) out(args);
     return verify(args) ? args : null;
   }
 }
@@ -252,7 +273,7 @@ module.exports = {
   log, err, msg, out,
   resolve, reserve, exists, load, save,
   curl, exec, plot, query, 
-  cli_run, cli_query_exec, dryrun,
+  cli_run, cli_compile,
   conf
 };
 

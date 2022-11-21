@@ -21,7 +21,6 @@ table research_outputs_base
 ## Creates
 table research_outputs_*
 */
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   scope   = 'world',
@@ -71,8 +70,7 @@ BEGIN
   SELECT 'test', COUNT(1) AS total, ${group.map(g => `COUNT(DISTINCT ${g}) AS num_${g}s`).join(',')} FROM \`${table}\`;
 END;
 `;}
-function compile_all() {
-  const args = app.conf();
+function compile_all(args={}) {
   const sqls = [];
   ['world','local'].forEach(scope => 
     [4,2].forEach(digits => {
@@ -88,5 +86,4 @@ function compile_all() {
   return sqls;
 }
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

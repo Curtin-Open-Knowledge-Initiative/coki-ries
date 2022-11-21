@@ -18,7 +18,6 @@ table core_heps
 table research_outputs_base
 
 */
-const app = require('app');
 const compile = ({
   ns_core = 'project.dataset',
   scope   = 'world',
@@ -55,7 +54,6 @@ BEGIN
   FROM ${ns_core}.research_outputs_${scope}_base;
 END;
 `;
-const compile_all = () => [ compile(app.conf()) ];
+const compile_all = (args={}) => [ compile(args) ];
 module.exports = { compile, compile_all };
-
-if (require.main === module) compile_all().forEach(sql => console.log(sql));
+if (require.main === module) require('app').cli_compile(compile_all);

@@ -12,31 +12,30 @@ Contact / Enquiries: [coki@curtin.edu.au][contact]
 
 ## Background
 
-The [Curtin Open Knowledge Initiative][COKI] (COKI) aggregates bibliometric and bibliographic data from publicly available sources such as [Crossref], [Unpaywall], [OpenCitations], [Microsoft Academic Graph], and [OpenAlex]. The resultant [BigQuery] database contains records for over 120 million research publications and forms a foundation for further analysis by the [COKI] team.
-
 [Excellence in Research for Australia][ERA] (ERA) is a periodic assessment that is conducted by the [Australian Research Council][ARC] (ARC). The assessment focuses on the activity of 42 Australian higher education providers (HEPs) across [236 ANZSRC fields of research][ANZSRC] (FoR). Performance is assessed (per HEP and FoR) by comparing research outputs to local and world benchmarks. Analysis has a citation-focus and draws from publication metadata provided by the participating HEPs.
 
-This software project has been developed to demonstrate how the [COKI] database may be used as a foundation for [ERA]-like analysis. The methodology is guided by published [ERA methods] and makes use of journal-level metadata from the [ERA 2023 Journal List]. However, the system is amenable to extension, outside of the ERA scope, to include any institution with a [ROR] identifier, and any research-topic vocabulary that has been assigned to research articles (eg, via machine-learning classifiers).
+The [Curtin Open Knowledge Initiative][COKI] (COKI) aggregates bibliometric and bibliographic data from publicly available sources such as [Crossref], [Unpaywall], [OpenCitations], [Microsoft Academic Graph], and [OpenAlex]. The resultant [BigQuery] database contains metadata for over 120 million research publications and forms the foundation for further analysis by the [COKI] team.
+
+This software project has been developed to demonstrate how the [COKI] database may be used to run an [ERA]-like analysis. The methodology is guided by published [ERA methods] and makes use of journal-level metadata from the [ERA 2023 Journal List]. The workflows are amenable to extension, outside of the ERA scope, to include any institution (with a [ROR] identifier) and any research-topic vocabulary that has been assigned to research articles (eg, via machine-learning classifiers).
 
 ## Demo System
 
-This codebase is free and open source ([FOSS]), however data access is limited. For evaluation purposes, a subset of the [COKI] dataset has been extracted and [made available][demodata] via [Google Cloud Storage][GCS]. This subset is limited to metadata for approximately two million journal-articles that:
+This codebase is free and open source ([FOSS]), however access to the COKI database is limited. For evaluation purposes, a subset of the [COKI] dataset has been extracted and [made available][demodata] via [Google Cloud Storage][GCS]. The subset is limited to metadata for approximately two million journal-articles that:
 
 - were published in 2016,
 - could be linked to at least one research institution (via [ROR] identifier), and
 - could be linked to a journal in the [ERA 2023 Journal List] (via [ISSN]).
 
-To build a database, you will need access to your own [BigQuery] instance and to a workstation that has either [Docker] or [NodeJS] installed. Follow the [installation instructions][install] to get started.
+To compile SQL scripts, you will need a workstation that has either [Docker] or [NodeJS]. If you wish to run the queries, to build a demo database, then you will need access to your own [BigQuery] instance. Follow the [installation instructions][install] to continue.
 
 ## Documentation
 
 - [Installation][install] - system requirements and installation (Docker, OS X or Linux)
 - [Configuration][configure] - description of configuration options
-- [Workflow][workflow] - detailed workflow diagram (Mermaid plot)
 - [Usage][usage] - command line interface instructions
 - [Roadmap][roadmap] - future development roadmap
-- [Method][methods] - a description of the methods used to build benchmarks & indicators
-- [Concepts][concepts] - some general concepts
+- [Workflow][workflow] - detailed workflow diagram
+- [Method][methods] - description of the methods used to build benchmarks & indicators
 
 ## Structure
 
@@ -53,9 +52,9 @@ Within this code repository, a `README.md` file in each directory provides conte
 
 The full COKI dataset is recompiled weekly by the [Academic Observatory Workflows], running on the [Academic Observatory Platform]. The underlying infrastructure requires significant resourcing and we do not currently make the data resource freely available (whereas the codebases are [FOSS]).
 
-For sustainable development and continuation of this project, our medium-term goal is to establish an institutional membership model. We are [seeking expressions of interest][contact] from institutions that would benefit from further development of an on-demand ERA-like analytical system. The system will aim to provide value to institutions by simplifying curation of research-output metadata and facilitating exploration of alternative analytical methods, for example, how Australian HEPs perform against other institutions with a focus on [Open Access] publication.
+For sustainable development and continuation of this project, our medium-term goal is to establish an institutional membership model. We are [seeking expressions of interest][contact] from institutions that would benefit from further development of an on-demand ERA-like analytical system. The system will aim to provide value to institutions by simplifying curation of research-output metadata and facilitating exploration of alternative analytical methods. For example, reporting on how Australian HEPs perform against other institutions with a focus on [Open Access] publication.
 
-We are also happy to [discuss][contact] possible collaboration opportunities, analysis services or access models with interested individuals.
+We are also happy to [discuss][contact] possible collaboration opportunities, analysis services or access models with interested individuals and institutions.
 
 Once the [ERA Transition Working Group] releases its findings and recommendations for the future of [ERA] assessments, we will have greater clarity on how best to proceed.
 
@@ -130,7 +129,6 @@ limitations under the License.
 [usage]: <docs/usage.md>
 [roadmap]: <docs/roadmap.md>
 [methods]: <docs/methods.md>
-[concepts]: <docs/concepts.md>
 [workflow]: <docs/workflow.md>
 [demodata]: <https://storage.googleapis.com/rt-era-public/data/raw/coki_data_list.html>
 
