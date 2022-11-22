@@ -86,6 +86,6 @@ async function run_telescope(conf_user={}) {
 }
 
 if (require.main === module) {
-  run_telescope({ replace : process.argv[2] == '--replace' });
+  run_telescope(app.conf());
 }
 module.exports = run_telescope;
