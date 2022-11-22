@@ -144,6 +144,11 @@ async function query(sql='', args={}) {
 
   if (args.verbose) out(sql);
   if (args.dryrun) return [null,null];
+  if (!args.keyfile || !exists(args.keyfile)) {
+    err(`this command cannot be executed because no BigQuery keyfile has been provided. Try using the --keyfile CLI option`);
+    return [true,null];
+  }
+
   const link = lib_bigq.connect(args);
   
   if (!args.docache) {
