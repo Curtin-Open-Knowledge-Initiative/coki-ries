@@ -12,7 +12,6 @@ FROM alpine:3.16.2
 WORKDIR /app
 RUN apk update && apk upgrade \
 && apk add git curl unzip nano nodejs npm \
-&& curl https://storage.googleapis.com/rt-era-public/code/release/ries/latest.zip -o code.zip \
-&& unzip code.zip && rm code.zip \
+&& git clone https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries.git /app \
 && npm install -g pnpm && pnpm install && pnpm audit
 CMD sh

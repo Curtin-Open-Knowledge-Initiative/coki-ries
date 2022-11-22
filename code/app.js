@@ -170,11 +170,13 @@ const conf = new function() {
     term  : { cast: v => ''+v, func: v => lib_type.is.Rex(v,/^[0-9a-zA-Z_\-]+$/)                 , info: 'must be a string with only the characters [a-zA-Z0-9_-]' },
     bucket: { cast: v => ''+v, func: v => lib_type.is.Rex(v,/^gs:\/\/([\w\-\.]+)(\/[\w\-\.]+)*$/), info: 'must be a Google Storage address, eg: gs://my-bucket'    },
     ror   : { cast: v => ''+v, func: v => lib_type.is.Rex(v,/^https:\/\/ror.org\/[0-9a-z]{9}$/)  , info: 'must be a ROR address, eg: https://ror.org/02n415q13'    },
+    any   : { cast: v => v   , func: v => v !== undefined && v !== null                          , info: 'must be defined and not null'                            },
   };
 
   // config schema and defaults
   const schema = {
     keyfile : { default: resolve('setup/.keyfile.json'), test: types.file  , info: 'path to a BigQuery credentials file (or symlink)'                                },
+    confile : { default: resolve('setup/.config.json') , test: types.file  , info: 'path to a configuration file for the application'                                },
     project : { default: ''                            , test: types.term  , info: 'the BigQuery project-id that the application has permission to access'           },
     dataset : { default: 'ries_demo'                   , test: types.term  , info: 'the BigQuery dataset-id that the application has permission to modify tables in' },
     bucket  : { default: 'gs://rt-era-public'          , test: types.bucket, info: 'address of the COKI Google Cloud Storage bucket where datafiles may be found'    },
@@ -211,19 +213,12 @@ const conf = new function() {
 
   // get the default config
   function args_get_default() {
-    const args = Object.fromEntries(Object.keys(schema).map(key => [key,schema[key].default]));
-    check('keyfile',args.keyfile);
-    args.project = require(args.keyfile).project_id;
-    return args;
+    return Object.fromEntries(Object.keys(schema).map(key => [key,schema[key].default]));
   }
 
   // load args from the config file
-  function args_get_from_file() {
-    if (exists('setup/.config.json')) return load('setup/.config.json');
-    if (exists('setup/.config.js'))   return load('setup/.config.js');
-    if (exists('setup/config.json'))  return load('setup/config.json');
-    if (exists('setup/config.js'))    return load('setup/config.js');
-    return {};
+  function args_get_from_file(ifile='setup/.config.json') {
+    return exists(ifile) ? load(ifile) : {};
   }
 
   // parse args from command line variables
@@ -248,18 +243,23 @@ const conf = new function() {
     named._args = unnamed;
     return named;
   }
-  
-  // get the final args
-  const args_base = args_get_default();
-  const args_file = args_get_from_file(); // settings from the conf file override the defaults
-  const args_cli  = args_get_from_cli();  // settings from the CLI override the conf file
 
-  if (!verify(args_base)) process.exit();
-  if (!verify(args_file)) process.exit();
-  if (!verify(args_cli))  process.exit();
+  // assemble the final state of the arguments
+  function assemble() {
+    const args_base  = args_get_default(); // default arguments
+    const args_cli   = args_get_from_cli(); // CLI arguments have the highest priority
+    const args_file  = args_get_from_file(args_cli.confile || args_base.confile || '');
+    const args_final = Object.assign({}, args_base, args_file, args_cli);
+    if (!exists(args_final.keyfile)) delete args_final.keyfile;
+    if (!exists(args_final.confile)) delete args_final.confile;
+    if (!verify(args_final)) process.exit();
+    return args_final;
+  }
+
+  const args_assembled = assemble();
 
   return (overrides={}) => {
-    const args = Object.assign({}, args_base, args_file, args_cli, overrides);
+    const args = Object.assign({}, args_assembled, overrides);
     args.ns_core = `${args.project}.${args.dataset}`;
     args.ns_inst = `${args.project}.${args.dataset}_inst`;
     if (args.debug) out(args);

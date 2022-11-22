@@ -10,6 +10,21 @@ A BigQuery based system for evaluating the impact of research publications. Base
 
 Contact / Enquiries: [coki@curtin.edu.au][contact]
 
+## Quickstart
+
+For detailed documentation, see: [install] | [configure] | [usage].
+
+```bash
+# install and run with Docker
+docker run --rm -it observatoryacademy/coki-ries:latest sh
+node . ?
+
+# or install and run locally
+git clone https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries.git && cd coki-ries
+npm install -g pnpm && pnpm install && pnpm audit
+node . ?
+```
+
 ## Background
 
 [Excellence in Research for Australia][ERA] (ERA) is a periodic assessment that is conducted by the [Australian Research Council][ARC] (ARC). The assessment focuses on the activity of 42 Australian higher education providers (HEPs) across [236 ANZSRC fields of research][ANZSRC] (FoR). Performance is assessed (per HEP and FoR) by comparing research outputs to local and world benchmarks. Analysis has a citation-focus and draws from publication metadata provided by the participating HEPs.

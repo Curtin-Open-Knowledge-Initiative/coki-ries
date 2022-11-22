@@ -48,7 +48,7 @@ function Link({keyfile='credentials.json',project='',dataset='',table=''}) {
   is(String,project); this.project = project;
   is(String,dataset); this.dataset = dataset;
   is(String,table);   this.table   = table;
-  must(fs.existsSync(keyfile), `ERROR: key file not found ${keyfile}`);
+  must(fs.existsSync(keyfile), `ERROR: BigQuery keyfile not found: ${keyfile}`);
 
   this.bq = new BigQuery({
     keyFilename : keyfile,

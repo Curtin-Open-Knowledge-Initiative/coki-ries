@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # check dependencies using a local package manager if available
-if   [[ ! -z `which brew` ]]; then brew update && brew upgrade && brew install git unzip curl node   npm
-elif [[ ! -z `which apt`  ]]; then apt  update && apt  upgrade && apt  add     git unzip curl nodejs npm
-elif [[ ! -z `which apk`  ]]; then apk  update && apk  upgrade && apk  add     git unzip curl nodejs npm
+if   [[ ! -z `which brew` ]]; then brew install git unzip curl node   npm
+elif [[ ! -z `which apt`  ]]; then apt  add     git unzip curl nodejs npm
+elif [[ ! -z `which apk`  ]]; then apk  add     git unzip curl nodejs npm
 fi
 
 # abort if dependencies aren't found
