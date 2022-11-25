@@ -13,22 +13,23 @@ julian.tonti-filippini@curtin.edu.au
 Apache 2.0
 
 ## Requires
-table observatory.doi20220709
+table raw_papers
 table core_papers
 table core_journals
+table core_fors
 table research_outputs_*
 table benchmarks_summary_*
 
 ## Creates
-table curtin_papers
-table curtin_outputs
-table curtin_summary_by_field_year
-table curtin_summary_by_field
-table curtin_summary_by_year
-table curtin_paper_classes
-table curtin_class_tallies_by_field_year
-table curtin_class_tallies_by_field
-table curtin_class_tallies_by_year
+table inst_papers
+table inst_outputs
+table inst_summary_by_field_year
+table inst_summary_by_field
+table inst_summary_by_year
+table inst_paper_classes
+table inst_class_tallies_by_field_year
+table inst_class_tallies_by_field
+table inst_class_tallies_by_year
 */
 const compile = ({
   ns_core   = 'project.dataset',

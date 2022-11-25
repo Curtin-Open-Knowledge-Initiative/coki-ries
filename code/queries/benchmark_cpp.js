@@ -3,7 +3,7 @@
 Compiles CPP benchmarks for calculating the RCI (relative citation impact) indicator.
 
 ## Description
-Method: https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2018.md#indicator-relative-citation-impact-rci
+Method: https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-relative-citation-impact-rci
 
 ## Contacts
 julian.tonti-filippini@curtin.edu.au

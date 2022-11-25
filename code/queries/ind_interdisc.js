@@ -4,7 +4,7 @@ Compiles data for the ERA interdisciplinary indicator.
 
 ## Description
 For methodology, see:
-https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2018.md#indicator-interdisciplinary-profiles
+https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-interdisciplinary-profiles
 
 ## Contacts
 julian.tonti-filippini@curtin.edu.au

@@ -3,7 +3,7 @@
 Assigs RCI scores to all journal articles.
 
 ## Description
-Method: https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2018.md#indicator-relative-citation-impact-rci
+Method: https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-relative-citation-impact-rci
 
 The Research Citation Impact for a paper is calculated separately for each FoR (field of research) that the paper contributes to. It is the number of citations for the paper divided by a citation benchmark value for the given FoR and year of publication. If there is no benchmark value available, the RCI is zero. Using year specific benchmarks helps to control somewhat for time bias (papers accumulate more citation over time). Separate RCI scores are assigned against different benchmarks (CPP global, CPP local, CPP HPI).
 

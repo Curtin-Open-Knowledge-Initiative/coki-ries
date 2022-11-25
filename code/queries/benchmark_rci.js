@@ -14,7 +14,7 @@ Since ERA 2023, there are 6 RCI categories (0:uncited through to 5:highest). The
 boundaries are dynamically computed for all element groupings.
 
 Methods:
-https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2018.md#indicator-distribution-of-papers-by-rci-classes
+https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-distribution-of-papers-by-rci-classes
 
 ## Contacts
 julian.tonti-filippini@curtin.edu.au

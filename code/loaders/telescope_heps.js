@@ -12,8 +12,7 @@ julian.tonti-filippini@curtin.edu.au
 Apache 2.0
 
 ## Requires
-exec telescope.js
-file www.arc.gov.au
+file other.cloud
 
 ## Creates
 table raw_heps

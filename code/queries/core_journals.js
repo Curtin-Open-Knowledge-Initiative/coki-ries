@@ -19,7 +19,6 @@ table core_fors
 
 ## Creates
 table core_journals
-table xref_for_journal
 
 */
 const compile = ({

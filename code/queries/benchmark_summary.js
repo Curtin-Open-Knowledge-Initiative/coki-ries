@@ -22,6 +22,7 @@ table benchmarks_cpp_*
 table benchmarks_hpi_*
 table benchmarks_centiles_*
 table benchmarks_rci_*
+table core_fors
 
 ## Creates
 table benchmarks_summary_*

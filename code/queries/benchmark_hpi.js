@@ -5,7 +5,7 @@ Compiles data for benchmark CPPs, used by the ERA 2023 HPI indicator.
 ## Description 
 The HPI benchmark provides a CPP (citations per paper) target for high-performing institutions.
 
-See: https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2023.md
+See: https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2023.md
 
 - restricted to journal articles, conference publications and review articles
 - restricted to outputs published by journals in the ERA 2023 Journal List

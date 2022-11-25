@@ -4,7 +4,7 @@ Assigns RCI categories to outputs or groups.
 
 ## Description
 For methodology, see:
-https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2018.md#indicator-distribution-of-papers-by-rci-classes
+https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-distribution-of-papers-by-rci-classes
 
 ## Contacts
 julian.tonti-filippini@curtin.edu.au
@@ -16,6 +16,7 @@ Apache 2.0
 table core_papers
 table rci_papers
 table rci_grouping_*
+table benchmarks_rci_*
 
 ## Creates
 table rci_classes_papers

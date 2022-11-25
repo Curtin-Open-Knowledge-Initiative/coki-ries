@@ -8,8 +8,12 @@ julian.tonti-filippini@curtin.edu.au
 ## License
 Apache 2.0
 
+## Requires
+file coki.cloud
+
 ## Creates
 table raw_forcodes
+
 */
 const compile = ({
   ns_core = 'project.dataset',

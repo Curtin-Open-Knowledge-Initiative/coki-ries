@@ -30,8 +30,7 @@ julian.tonti-filippini@curtin.edu.au
 Apache 2.0
 
 ## Requires
-table observatory.doi20220709
-table xref_issn_issnl
+table raw_papers
 table core_heps
 table core_rors
 table core_journals

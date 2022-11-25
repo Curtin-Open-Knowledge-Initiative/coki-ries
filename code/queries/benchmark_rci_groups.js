@@ -3,7 +3,7 @@
 Assigns RCI scores (using various benchmarks) to groupings of papers, weighted by FoR apportionment.
 
 ## Description
-Method: https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2018.md#indicator-relative-citation-impact-rci
+Method: https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-relative-citation-impact-rci
 
 Unlike individual papers, groupings use the weighted RCI scores of grouped papers to determine a higher level RCI. Papers use only citation count.
 

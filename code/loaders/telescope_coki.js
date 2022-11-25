@@ -15,9 +15,10 @@ julian.tonti-filippini@curtin.edu.au (code author)
 Apache 2.0
 
 ## Requires
+file other.cloud
 
 ## Creates
-table raw_outputs
+table raw_papers
 */
 const app = require('app');
 const DATADIR = app.reserve('data/coki');

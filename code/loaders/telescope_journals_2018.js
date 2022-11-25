@@ -14,8 +14,7 @@ julian.tonti-filippini@curtin.edu.au
 Apache 2.0
 
 ## Requires
-exec telescope.js
-file web.archive.org.au
+file other.cloud
 
 ## Creates
 table raw_journals_2018

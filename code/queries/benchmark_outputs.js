@@ -4,8 +4,8 @@ Compiles data for the ERA research outputs indicator.
 
 ## Description
 For methodology, see:
-https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2018.md#indicator-research-outputs
-https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2018.md#indicator-research-outputs-by-year
+https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-research-outputs
+https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-research-outputs-by-year
 
 When all combinations are used, this will produce 32 different tables.
 
@@ -16,7 +16,7 @@ julian.tonti-filippini@curtin.edu.au
 Apache 2.0
 
 ## Requires
-table research_outputs_base
+table research_outputs_world_base
 
 ## Creates
 table research_outputs_*

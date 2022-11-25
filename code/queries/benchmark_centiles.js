@@ -4,7 +4,7 @@ Compiles data for the ERA centiles indicator.
 
 ## Description
 For a detailed method description, see:
-https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2018.md#indicator-distribution-of-papers-based-on-global-centiles
+https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-distribution-of-papers-based-on-global-centiles
 
 For each Field of Research (FoR) and for each year in the ERA evaluation window(s), papers that belong to this grouping are sorted by citation count, then percentile thresholds are determined. The median becomes a benchmark for comparison of CPP (citations per paper) when calculating a paper's RCI score (relative citation impact).
 

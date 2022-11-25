@@ -4,7 +4,7 @@ Compiles data for the ERA pubishing profile indicator.
 
 ## Description
 For methodology see:
-https://github.com/Curtin-Open-Knowledge-Initiative/for_benchmark_predictions/blob/main/docs/era_2018.md#indicator-research-outputs
+https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-research-outputs
 
 ## Contacts
 julian.tonti-filippini@curtin.edu.au
@@ -13,7 +13,7 @@ julian.tonti-filippini@curtin.edu.au
 Apache 2.0
 
 ## Requires
-table research_outputs_base
+table research_outputs_world_base
 
 ## Creates
 table publishing_profile_*

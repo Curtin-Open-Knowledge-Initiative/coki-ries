@@ -15,7 +15,7 @@ table core_papers
 table core_heps
 
 ## Creates
-table research_outputs_base
+table research_outputs_world_base
 
 */
 const compile = ({
