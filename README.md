@@ -4,7 +4,7 @@ A BigQuery based system for evaluating the impact of research publications. Base
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![DOI_repo](https://zenodo.org/badge/DOI/10.5281/zenodo.7345347.svg)](https://doi.org/10.5281/zenodo.7345347)
-[![DOI_doc](https://zenodo.org/badge/DOI/10.5281/zenodo.7084440.svg)](https://doi.org/10.5281/zenodo.7084439)
+[![DOI_doc](https://zenodo.org/badge/DOI/10.5281/zenodo.7084439.svg)](https://doi.org/10.5281/zenodo.7084439)
 ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=flat-square&logo=google-cloud)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat-square&logo=docker&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=flat-square&logo=javascript)
