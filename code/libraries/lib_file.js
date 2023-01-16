@@ -21,6 +21,7 @@ const file = {
   base       : (f) => path.basename(f).split(path.extname(f)).join(''),
   exists     : (f) => fs.existsSync(f),
   stat       : (f) => fs.statSync(f),
+  size       : (f) => file.stat(f).size,
   load       : (f) => file.exists(f) ? fs.readFileSync(f).toString() : '',
   save       : (f,s) => fs.writeFileSync(f,s),
   remove     : (f) => file.exists(f) ? fs.unlinkSync(f) : '',

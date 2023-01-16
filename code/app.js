@@ -15,7 +15,9 @@ const lib_str  = require('./libraries/lib_string');
 const lib_type = require('./libraries/lib_is');
 const lib_cli  = require('./libraries/lib_cli'); // TODO: remove docopt dependency
 const cache    = require('./libraries/lib_cache');
+const fetch    = require('node-fetch');
 const shelljs  = require('shelljs'); // TODO: remove dependency
+const fs       = require('fs'); // TODO: remove dependency
 shelljs.config.silent = true;
 
 const log = (...s) => !console.log((new Date()).toTimeString().split(' ')[0], '-', ...s);
@@ -38,7 +40,21 @@ function exec(str) {
 
 // wrapper around basic CLI cURL usage (TODO: remove this dependency)
 function curl(url, ofile=resolve(datadir,'.cache/temp.txt')) {
-  return exec(`curl '${url}' -o ${resolve(ofile)}`);
+  return exec(`curl --location --max-redirs 3 --output ${resolve(ofile)} '${url}'`);
+}
+
+// download to a file or to stdout
+async function download(url,ofile) {
+  const response = await fetch(url);
+  const ostream = ofile ? fs.createWriteStream(ofile) : process.stdout;
+  const tstream = new WritableStream({
+    write(chunk) { ostream.write(chunk); }
+  });
+  await new Promise((pass,fail) => {
+    response.body.pipeTo(tstream);
+    ostream.on("error",fail);
+    ostream.on("finish",pass);
+  });
 }
 
 // resolve a file path relative to the project home directory
@@ -142,7 +158,7 @@ function cli_usage() {
 async function query(sql='', args={}) {
   args = conf(args);
 
-  if (args.verbose) out(sql);
+  //if (args.verbose) out(sql);
   if (args.dryrun) return [null,null];
   if (!args.keyfile || !exists(args.keyfile)) {
     err(`this command cannot be executed because no BigQuery keyfile has been provided. Try using the --keyfile CLI option`);
@@ -277,7 +293,7 @@ module.exports = {
   file : lib_file,
   log, err, msg, out,
   resolve, reserve, exists, load, save,
-  curl, exec, plot, query, 
+  download, curl, exec, plot, query, 
   cli_run, cli_compile,
   conf
 };

@@ -28,7 +28,7 @@ function compile_raw(conf={}) {
     require('../queries/raw_issns'   ).compile(conf),
     require('../queries/raw_heps'    ).compile(conf),
     require('../queries/raw_history' ).compile(conf),
-    require('../queries/raw_topics'  ).compile(conf),
+    require('../queries/raw_fors'    ).compile(conf),
     require('../queries/raw_journals').compile(conf),
     require('../queries/raw_papers'  ).compile(conf),
   ];

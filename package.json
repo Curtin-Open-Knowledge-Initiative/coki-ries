@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node code/utilities/compile_all",
     "cli": "node code/app.js",
-    "ping": "node code/utilities/config_test", 
+    "ping": "node code/utilities/config_test",
     "test": "jest"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
     "app": "link:code",
     "docopt": "^0.6.2",
     "exceljs": "^4.3.0",
+    "node-fetch": "2",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {

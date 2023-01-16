@@ -13,7 +13,7 @@ access.*
 config.*
 
 /code/plotters/demo
-/code/internal/jobs/elements/data/*
+/code/internal/jobs/elements/*/data/*
 
 /data/*
 !/data/README.md
