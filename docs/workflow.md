@@ -87,6 +87,8 @@ graph LR
   ind_publishing_profile.js(ind_publishing_profile.js):::exec --> publishing_profile_*[(publishing_profile_*)]:::table
   rci_grouping_*[(rci_grouping_*)]:::table --> ind_ratings.js(ind_ratings.js):::exec
   ind_ratings.js(ind_ratings.js):::exec --> ratings_*[(ratings_*)]:::table
+  coki.cloud{{coki.cloud}}:::file --> raw_fors.js(raw_fors.js):::exec
+  raw_fors.js(raw_fors.js):::exec --> raw_forcodes[(raw_forcodes)]:::table
   coki.cloud{{coki.cloud}}:::file --> raw_heps.js(raw_heps.js):::exec
   raw_heps.js(raw_heps.js):::exec --> raw_heps[(raw_heps)]:::table
   coki.cloud{{coki.cloud}}:::file --> raw_history.js(raw_history.js):::exec
@@ -100,8 +102,6 @@ graph LR
   raw_papers.js(raw_papers.js):::exec --> raw_papers[(raw_papers)]:::table
   coki.cloud{{coki.cloud}}:::file --> raw_rors.js(raw_rors.js):::exec
   raw_rors.js(raw_rors.js):::exec --> raw_rors[(raw_rors)]:::table
-  coki.cloud{{coki.cloud}}:::file --> raw_topics.js(raw_topics.js):::exec
-  raw_topics.js(raw_topics.js):::exec --> raw_forcodes[(raw_forcodes)]:::table
   raw_papers[(raw_papers)]:::table --> report_institution.js(report_institution.js):::exec
   core_papers[(core_papers)]:::table --> report_institution.js(report_institution.js):::exec
   core_journals[(core_journals)]:::table --> report_institution.js(report_institution.js):::exec

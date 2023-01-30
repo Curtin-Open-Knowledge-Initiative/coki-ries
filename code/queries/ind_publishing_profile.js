@@ -1,6 +1,6 @@
 /*
 ## Summary
-Compiles data for the ERA pubishing profile indicator.
+Compiles data for the ERA publishing profile indicator.
 
 ## Description
 For methodology see:

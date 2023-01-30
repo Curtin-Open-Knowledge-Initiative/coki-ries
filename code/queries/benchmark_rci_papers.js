@@ -1,6 +1,6 @@
 /*
 ## Summary
-Assigs RCI scores to all journal articles.
+Assigns RCI scores to all journal articles.
 
 ## Description
 Method: https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries/blob/main/docs/era_2018.md#indicator-relative-citation-impact-rci

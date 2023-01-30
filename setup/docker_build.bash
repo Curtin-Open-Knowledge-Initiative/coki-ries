@@ -1,3 +1,3 @@
-# (re)build the docker image named 'coki:latest'
+# (re)build a local docker image named 'ries'
 cd `dirname ${BASH_SOURCE[0]}`
-docker build --tag coki:latest --no-cache .
+docker build --tag ries --no-cache .

@@ -28,32 +28,32 @@ echo $BUCKET
 if [[ ! -f Dockerfile ]];        then gsutil cp $BUCKET/Dockerfile ./; fi
 if [[ ! -f docker_build.bash ]]; then gsutil cp $BUCKET/docker_build.bash ./; fi
 if [[ ! -f docker_start.bash ]]; then gsutil cp $BUCKET/docker_start.bash ./; fi
-if [[ ! -f conf/.config.json ]]; then gsutil cp $BUCKET/example_config.json conf/; fi
+if [[ ! -f setup/.config.json ]]; then gsutil cp $BUCKET/example_config.json setup/; fi
 
 # set up the symlink to the provided keyfile
 echo "Linking keyfile:"
-if [[ ! -L conf/.keyfile.json ]]; then ln -s $KEYFILE conf/.keyfile.json; fi
-if [[ ! -L conf/.keyfile.json ]]; then 
+if [[ ! -L conf/.access.json ]]; then ln -s $KEYFILE setup/.access.json; fi
+if [[ ! -L conf/.access.json ]]; then 
   echo "ERROR: unable to create a symlink to keyfile: $KEYFILE"; exit; 
 else
   echo "Success"
 fi
 
 echo "Building docker image:"
-docker build --tag coki:latest --no-cache .
+docker build --tag ries --no-cache .
 
 echo "Testing connection:"
 docker run --rm -it \
-  --volume $KEYFILE:/app/setup/.keyfile.json \
-coki node /app/code/utilities/config_test
+  --volume $KEYFILE:/app/setup/.access.json \
+ries node . config_test
 
 echo "Testing generation of default SQL:"
 docker run --rm -it \
-  --volume $KEYFILE:/app/setup/.keyfile.json \
-coki node /app/code/utilities/compile_all --dryrun --verbose
+  --volume $KEYFILE:/app/setup/.access.json \
+ries node . compile_all --dryrun --verbose
 
 echo "Starting container for general use:"
 docker run --rm -it \
   --volume $PWD/data:/app/data \
-  --volume $KEYFILE:/app/setup/.keyfile.json \
-coki sh
+  --volume $KEYFILE:/app/setup/.access.json \
+ries sh

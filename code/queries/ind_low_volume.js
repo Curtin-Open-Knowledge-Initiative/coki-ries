@@ -1,6 +1,6 @@
 /*
 ## Summary
-Compiles data for the ERA low volumne indicator. 
+Compiles data for the ERA low volume indicator. 
 
 ## Description
 For methodology, see:

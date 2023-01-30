@@ -15,6 +15,7 @@ const json = {
   load : (f)   => json.decode(file.load(f)),
   save : (f,v) => file.save(f, json.encode(v)),
   encode : (v) => JSON.stringify(v) + file.EOL,
+  human  : (v) => JSON.stringify(v,null,2) + file.EOL,
   decode : (s) => JSON.parse(s),
   print  : (v) => console.log(JSON.stringify(v,null,1)),
   to_jsonl  : (s,d) => json.l.save(d, json.load(s)),

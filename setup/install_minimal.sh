@@ -12,13 +12,13 @@ unzip code.zip && rm code.zip
 npm install -g pnpm && pnpm install && pnpm audit
 
 # after exporting an access keyfile from your BigQuery console, link it in
-ln -s /path/to/your/keyfile.json setup/.keyfile.json
+ln -s /path/to/your/keyfile setup/.access.json
 
 # OPTIONAL: create and configure a config file
 cp setup/example_config.json setup/.config.json && nano setup/.config.json
 
 # test your configuration
-node code/utilities/config_test
+node . config_test
 
 # compile everything
-node code/utilities/compile_all.js
+node . compile_all

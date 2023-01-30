@@ -16,14 +16,16 @@ Contact / Enquiries: [coki@curtin.edu.au][contact]
 For detailed documentation, see: [install] | [configure] | [usage].
 
 ```bash
-# install and run with Docker
-docker run --rm -it observatoryacademy/coki-ries:latest sh
-node . ?
+# run with Docker
+docker run --rm -it cokicurtin/ries:latest sh
+node . --help
+node . compile_all
 
 # or install and run locally
 git clone https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries.git && cd coki-ries
 npm install -g pnpm && pnpm install && pnpm audit
-node . ?
+node . --help
+node . compile_all
 ```
 
 ## Background

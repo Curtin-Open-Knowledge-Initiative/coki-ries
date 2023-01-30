@@ -1,10 +1,15 @@
 {
-  "bucket"  : "gs://rt-era-public",
-  "dataset" : "demo",
-  "replace" : false,
-  "verbose" : true,
-  "dryrun"  : true,
-  "yr_from" : 2016,
-  "yr_to"   : 2021,
-  "ror_url" : "https://ror.org/02n415q13"
+  "confile": "setup/.config.json",
+  "keyfile": "setup/.access.json",
+  "project": "rt-era",
+  "dataset": "demo",
+  "bucket": "gs://rt-era-public",
+  "replace": false,
+  "verbose": true,
+  "dryrun": true,
+  "docache": false,
+  "debug": false,
+  "start": 2000,
+  "finish": 2022,
+  "rorcode": "https://ror.org/02n415q13"
 }

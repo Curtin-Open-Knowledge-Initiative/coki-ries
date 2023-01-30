@@ -37,7 +37,7 @@ julian.tonti-filippini@curtin.edu.au
 Apache 2.0
 */
 const fs = require('fs');
-const sh = require('shelljs');
+const {execSync} = require('node:child_process');
 const {BigQuery} = require('@google-cloud/bigquery');
 const { mode_fail, is, must } = require('./lib_is'); mode_fail();
 
@@ -321,7 +321,7 @@ async function create_from_bucket({ link={}, name='a_table', bucket='rt-era-publ
   // if replacing, or the table doesn't exist, then load the schema from the bucket
   if (replace || !await table_exists(link)) {
     try { 
-      link.schema = JSON.parse(sh.exec(`curl https://storage.googleapis.com/${bucket}/${path_schema}`));
+      link.schema = JSON.parse(execSync(`curl https://storage.googleapis.com/${bucket}/${path_schema}`));
     }
     catch (e) {
       return console.error('ERROR: the schema could not be loaded');
@@ -346,7 +346,6 @@ async function create_from_bucket({ link={}, name='a_table', bucket='rt-era-publ
   let [e] = await query(link,sql);
   return e ? console.error('ERROR: unable to load data') : console.log('loading succeeded');
 }
-
 
 module.exports = { 
   connect, exists, 

@@ -1,17 +1,21 @@
-# build image:
-# docker build --tag coki:latest .
+# (re)build image:
+# docker build --no-cache --tag cokicurtin/ries:latest .
+# docker image ls
+#
+# push image to dockerhub
+# docker login
+# docker push cokicurtin/ries:latest
 #
 # run container with local files
-# docker run -it --name coki \
-#   --volume ${PWD}/conf:/app/conf \
-#   --volume ${PWD}/data:/app/data \
-# coki:latest
-# node /app/code/cli/compile_all.js
-
+# docker run --rm -it --name ries \
+#  --volume ${PWD}/setup/.config.json:/app/setup/.config.json \
+#  --volume ${PWD}/setup/.access.json:/app/setup/.access.json \
+#  --volume ${PWD}/data:/app/data \
+# cokicurtin/coki-ries:latest node . config_test
 FROM alpine:3.16.2
 WORKDIR /app
 RUN apk update && apk upgrade \
 && apk add git curl unzip nano nodejs npm \
 && git clone https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries.git /app \
-&& npm install -g pnpm && pnpm install && pnpm audit
+&& npm install -g pnpm && pnpm audit --fix && pnpm install
 CMD sh

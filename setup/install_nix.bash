@@ -20,28 +20,22 @@ git clone https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries.git && c
 npm install -g pnpm && pnpm install && pnpm audit
 
 echo "Default settings:"
-node code/utilities/config_print
+node . config_print
 
 # if a keyfile has been provided then link it in
 if [[ ! $1 ]]; then 
   KEYFILE="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
   echo "Attempting to link keyfile: $KEYFILE"
   if [[ ! -f $KEYFILE ]]; then echo "FAILURE: keyfile not found"; exit; fi
-  if [[ ! -L setup/.keyfile.json ]]; then ln -s $KEYFILE setup/.keyfile.json; fi
-  if [[ ! -L setup/.keyfile.json ]]; then echo "FAILURE: unable to create link"; exit; fi
+  if [[ ! -L setup/.access.json ]]; then ln -s $KEYFILE setup/.access.json; fi
+  if [[ ! -L setup/.access.json ]]; then echo "FAILURE: unable to create link"; exit; fi
   echo "SUCCESS: created link to keyfile"
   echo "Testing connection:"
-  node code/utilities/config_test
+  node . config_test
 fi
 
-
-
-
-
-
-
 echo "Testing generation of default SQL:"
-node code/utilities/compile_all --dryrun --verbose
+node . compile_all --dryrun --verbose
 
 echo "Showing instructions:"
 node . --help
@@ -49,9 +43,8 @@ node . --help
 # suggest that a config be created
 if [[ ! -f setup/.config.json ]]; then 
   cp setup/example_config.json setup/.config.json
-  echo "Check your CONFIG settings at ./ries/setup/.config.json"
+  echo "Check your CONFIG settings at $PWD/setup/.config.json"
 fi
 
 # compile everything
-echo "Once you are happy that everything is correct, then build the database with:"
-echo "> node code/utilities/compile_all"
+echo "Once configured, build the database with: node . compile_all"

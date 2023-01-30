@@ -11,6 +11,7 @@ Apache 2.0
 const file = require('./lib_file');
 const meta = require('./lib_meta');
 const path = require('path');
+const exec = require('node:util').promisify(require('node:child_process').exec);
 
 // compile a dag given a set of files (or directories)
 function compile_dag({ifiles}) {
@@ -119,8 +120,8 @@ function run_dag(dag={}, options={}) {
     return exec_command(`node ${dag_node}.filename`);
   }
   async function exec_command() {
-    if (cmd) return sh.exec(cmd, {async:true});
-  }  
+    if (cmd) return exec(cmd);
+  }
 }
 
 function save_dag(ofile,dag={}) {

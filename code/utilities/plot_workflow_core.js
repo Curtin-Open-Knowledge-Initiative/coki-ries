@@ -50,7 +50,7 @@ function render() {
   lib_file.save(ofile_plot, lib_mer.html(mer_text));
   lib_file.save(ofile_repo, "```mermaid\n"+mer_text+"\n```\n");
 
-  require('shelljs').exec(`open ${ofile_plot}`);
+  require('node:child_process').execSync(`open ${ofile_plot}`);
 }
 module.exports = render;
 if (require.main === module) render();

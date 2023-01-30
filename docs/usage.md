@@ -1,38 +1,42 @@
 # Usage
 
+## Docker
+
 If using docker, you can either invoke a command directly or enter an interactive container:
 
 ```bash
 
 # single-use invocation (in this case print help)
-docker run --rm -it coki-ries node . --help
+docker run --rm -it cokicurtin/ries:latest node . --help
 
 # interactive container
-docker run --rm -it coki-ries sh
+docker run --rm -it cokicurtin/ries:latest sh
 node . --help
 exit
 
-# for certain commands, you may want to bind-mount a keyfile, config file and/or data directory
-docker run --rm -it --name coki-ries \
-  --volume /your/config.json:/app/setup/.config.json \
-  --volume /your/keyfile.json:/app/setup/.keyfile.json \
-  --volume /your/datadir:/app/data \
-coki-ries sh
+# for certain commands, you may want to bind-mount an access file, config file and/or data directory
+docker run --rm -it --name ries \
+  --volume your_access_file:/app/setup/.access.json \
+  --volume your_config_file:/app/setup/.config.json \
+  --volume your_data_folder:/app/data \
+cokicurtin/ries:latest sh
+node config_test
+exit
 
 ```
 
-## Examples
+## Usage Examples
 
-These examples assume that you've either installed the app locally, or you're running from within an interactive Docker container, and that you're in the app's root directory:
+These examples assume you're in the app's root directory (either locally or in a docker container).
 
 ```bash
-# print short help information (usage)
+# print short help information
 node .
 
 # print full help information
 node . -h
 
-# print the current configuration (default + file + cli)
+# print the current configuration
 node . config_print
 
 # see the effect of providing config options at the command line
