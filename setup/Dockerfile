@@ -20,5 +20,6 @@ WORKDIR /app
 RUN apk update && apk upgrade \
 && apk add git curl unzip nano nodejs npm \
 && git clone https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries.git /app \
-&& npm install -g pnpm && pnpm audit --fix && pnpm install
+&& npm install -g pnpm && pnpm audit --fix && pnpm install \
+&& alias ries="node /app"
 CMD sh
