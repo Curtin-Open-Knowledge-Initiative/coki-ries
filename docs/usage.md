@@ -79,8 +79,8 @@ node . query_print 25
 node . query_print raw_journals
 
 # invoke a specific SQL query (by ID or name, don't forget to add required parameters if needed)
-node . query_exec 21
-node . query_exec ping
+node . query_run 21
+node . query_run ping
 
 # show workflow diagrams
 node . plot_workflow
@@ -101,7 +101,7 @@ node . analyse_era --start=2011 --finish=2016
 
 ## Command Line Interface
 
-Access the CLI instructions by running `node . --help` from within the project directory or, explicitly `node /path/to/app.js --help`
+Access the CLI instructions by running `node . help` from within the project directory or, explicitly `node /path/to/app.js help`
 
 ```docs
 
@@ -109,55 +109,65 @@ Access the CLI instructions by running `node . --help` from within the project d
 
 Run various RIES tasks from the command line
 
+Version: 1.0.0
+
 Usage:
-  cli analyse_era         [options] --start=<int> --finish=<int>
-  cli analyse_institution [options] --rorcode=<url>
-  cli analyse_topic       [options] --topic=<int>
-  cli compile_all         [options]
-  cli compile_benchmarks  [options]
-  cli compile_core        [options]
-  cli compile_indicators  [options]
-  cli compile_raw         [options]
-  cli config_print        [options]
-  cli config_test         [options]
-  cli plot_workflow       [options]
-  cli plot_workflow_core  [options]
-  cli query_exec          [options] <id>
-  cli query_list          [options]
-  cli query_print         [options] <id>
+  ries version
+  ries usage
+  ries help
+  ries options
+  ries test_config         [options]
+  ries test_access         [options]
+  ries plot_workflow_core  [options]
+  ries plot_workflow       [options]
+  ries query_list          [options]
+  ries query_print         [options] <id>
+  ries query_run           [options] <id>
+  ries analyse_institution [options] --rorcode=<url>
+  ries analyse_topic       [options] --topic=<int>
+  ries analyse_era         [options] --start=<int> --finish=<int>
+  ries compile_raw         [options]
+  ries compile_core        [options]
+  ries compile_benchmarks  [options]
+  ries compile_indicators  [options]
+  ries compile_all         [options]
   
 Options:
-  --help, -h        Show this help message
-  --version, -v     Current version
-  --keyfile=<str>   The location of your BigQuery keyfile.
-  --bucket=<str>    Name of the COKI public Google Cloud bucket.
+  --confile=<str>   Path to a JSON file that contains these config options as an object.
+  --keyfile=<str>   Path to a JSON file that contains your BigQuery access credentials.
   --project=<str>   The name of your BigQuery project.
   --dataset=<str>   The name of your BigQuery dataset.
+  --bucket=<str>    Name of the COKI public Google Cloud bucket.
   --replace         Overwrite existing tables.
   --verbose         Print SQL queries to the command line as they are generated.
   --dryrun          Print SQL queries but don't execute them.
   --docache         Use the query cache to avoid repeating queries.
   --debug           Print some debugging information, such as config settings.
-  --start=<int>     Start analysis at this year.
-  --finish=<int>    Finish analysis at this year.
+  --start=<int>     Start analysis at this year (inclusive).
+  --finish=<int>    Finish analysis at this year (inclusive).
   --rorcode=<url>   The Research Organization Registry URL of your institution.
-  <id>              The query ID, either an integer or a name.
 
 Functions:
-  analyse_era         - (Re)generate a report for a given ERA time period.
-  analyse_institution - (Re)generate a report for a single research organisation.
-  analyse_topic       - (Re)generate a report for a particular field of research .
-  compile_all         - (Re)compile all tables in the database
-  compile_benchmarks  - (Re)compile only the `benchmark` tables in the database.
-  compile_core        - (Re)compile only the `core` tables in the database, to suit your analysis.
-  compile_indicators  - (Re)compile only the `indicator` tables in the database.
-  compile_raw         - (Re)compile only the `raw` tables in the database by importing data from the COKI bucket.
-  plot_workflow       - (Re)generate a Mermaid plot for the database build process.
+  version             - Print the current version.
+  usage               - Print basic usage information (the default).
+  help                - Print full help information.
+  options             - Print information about command line options.
+  test_config         - Verify and print the current configuration settings as a JSON object.
+  test_access         - Attempt to connect to the specified BigQuery database.
   plot_workflow_core  - (Re)generate a Mermaid plot for the core workflow.
-  query_exec          - Compile a query and run it.
+  plot_workflow       - (Re)generate a Mermaid plot for the database build process.
   query_list          - Print a list of all available queries.
   query_print         - Compile a query and print the SQL to the screen without running it.
-  test_config         - Check if the default config is valid and the app can connect to your database.
+  query_run           - Compile a query and run it.
+  analyse_institution - (Re)generate a report for a single research organisation.
+  analyse_topic       - (Re)generate a report for a particular field of research .
+  analyse_era         - (Re)generate a report for a given ERA time period.
+  compile_raw         - (Re)compile only the `raw` tables in the database by importing data from the COKI bucket.
+  compile_core        - (Re)compile only the `core` tables in the database, to suit your analysis.
+  compile_benchmarks  - (Re)compile only the `benchmark` tables in the database.
+  compile_indicators  - (Re)compile only the `indicator` tables in the database.
+  compile_all         - (Re)compile all tables in the database.
+
 ```
 
 ## Arguments
@@ -186,13 +196,13 @@ You can override any of these at the command line using `--arg=value` syntax:
 --dryrun=<bool>
   Print SQL queries but don't execute them.
 
---yr-from=<int>
+--start=<int>
   Start analysis at this year.
 
---yr-to=<int>
+--finish=<int>
   Finish analysis at this year.
 
---ror-url=<url>
+--rorcode=<url>
   The Research Organization Registry URL of your institution.
 ```
 
@@ -200,47 +210,51 @@ You can override any of these at the command line using `--arg=value` syntax:
 
 ```text
 
-analyse_era --year-from=<int> --year-to<int>
-  (Re)generate a report for a given ERA time period.
+test_config         
+  Verify and print the current configuration settings as a JSON object.
 
-analyse_institution --institution=<url>
+test_access         
+  Attempt to connect to the specified BigQuery database.
+
+plot_workflow_core  
+  (Re)generate a Mermaid plot for the core workflow.
+
+plot_workflow       
+  (Re)generate a Mermaid plot for the database build process.
+
+query_list          
+  Print a list of all available queries.
+
+query_print <id>
+  Compile a query and print the SQL to the screen without running it.
+
+query_run <id>
+  Compile a query and run it.
+
+analyse_institution --rorcode=<url>
   (Re)generate a report for a single research organisation.
 
 analyse_topic --field=<int>
   (Re)generate a report for a particular field of research .
 
-compile_all
-  (Re)compile all tables in the database
+analyse_era --start=<int> --finish=<int>
+  (Re)generate a report for a given ERA time period.
 
-compile_benchmarks
-  (Re)compile only the `benchmark` tables in the database.
-
-compile_core
-  (Re)compile only the `core` tables in the database, to suit your analysis.
-
-compile_indicators
-  (Re)compile only the `indicator` tables in the database.
-
-compile_raw
+compile_raw         
   (Re)compile only the `raw` tables in the database by importing data from the COKI bucket.
 
-plot_workflow
-  (Re)generate a Mermaid plot for the database build process.
+compile_core        
+  (Re)compile only the `core` tables in the database, to suit your analysis.
 
-plot_workflow_core
-  (Re)generate a Mermaid plot for the core workflow.
+compile_benchmarks  
+  (Re)compile only the `benchmark` tables in the database.
 
-query_exec --name=<str>
-  Compile a query and run it.
+compile_indicators  
+  (Re)compile only the `indicator` tables in the database.
 
-query_list
-  Print a list of all available queries.
+compile_all         
+  (Re)compile all tables in the database.
 
-query_print --name=<str>
-  Compile a query and print the SQL to the screen without running it.
-
-test_config
-  Check if the default config is valid and the app can connect to your database.
 ```
 
 ## Compiling Queries
@@ -250,9 +264,9 @@ Each of the queries in `/code/queries` can be invoked directly at the command li
 ```bash
 # these are equivalent for printing a query
 node . query_print benchmark_cpp
-node code/queries/benchmark_cpp --verbose=true --dryrun=true
+node code/queries/benchmark_cpp --verbose true --dryrun true
 
 # these are equivalent for running a query
-node . query_exec benchmark_cpp
+node . query_run benchmark_cpp
 node code/queries/benchmark_cpp --verbose=true --dryrun=false
 ```

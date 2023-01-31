@@ -160,6 +160,12 @@ const cli = {
     if (args.help || args.h || args['?'] || util == '?') return cli.help();
     if (args.usage || args.u) return cli.usage();
     if (!func && !util) return cli.usage();
+    switch (util) {
+      case 'help': return cli.help();
+      case 'usage': return cli.usage();
+      case 'options': return cli.options();
+      case 'version': return cli.version();
+    }
     
     // if no function has been provided, look for a matching utility
     if (!func) {
@@ -194,8 +200,20 @@ const cli = {
 
   usage : () => {
     const docs  = lib_str.get_between(load(docfile),'```docs', '```').trim();
-    const usage = lib_str.get_between(docs,"Usage:", "Options", true, false).trim();
-    out(usage);
+    const text = lib_str.get_between(docs,"Usage:", "Options", true, false).trim();
+    out(text);
+  },
+
+  options : () => {
+    const docs  = lib_str.get_between(load(docfile),'```docs', '```').trim();
+    const text = lib_str.get_between(docs,"Options:", "Functions", true, false).trim();
+    out(text);
+  },
+
+  version : () => {
+    const docs  = lib_str.get_between(load(docfile),'```docs', '```').trim();
+    const text = lib_str.get_between(docs,"Version:", "\n", true, false).trim();
+    out(text);
   }
 }
 

@@ -12,7 +12,7 @@ Various actions that can be run from the command line or imported as library fun
 | plot_workflow.js       | Rebuild and show (in Electron) a Mermaid plot for the overall workflow. |
 | plot_workflow_core.js  | Rebuild and show a Mermaid plot of the project at a higher (abstract) level. |
 | query_compile.js       | Given the name of a pre-canned query (in the `./sql/templated` directory), compile and print the SQL for it. |
-| query_execute.js       | Given the name of a pre-canned query, (re)run it in Google BigQuery. |
+| query_run.js           | Given the name of a pre-canned query, (re)run it in Google BigQuery. |
 | telescopes_run.js      | Run all ETL scripts to extract data from primary sources and rebuild `raw` tables. |
 
 ## Command Line Documentation
@@ -116,7 +116,7 @@ plot_workflow
 plot_workflow_core
   (Re)generate a Mermaid plot for the core workflow.
 
-query_exec --name=<str>
+query_run --name=<str>
   Compile a query and run it.
 
 query_list
@@ -136,21 +136,21 @@ test_config
 Run various RIES tasks from the command line
 
 Usage:
-  cli analyse_era         [options] --start=<int> --finish=<int>
-  cli analyse_institution [options] --rorcode=<url>
-  cli analyse_topic       [options] --topic=<int>
-  cli compile_all         [options]
-  cli compile_benchmarks  [options]
-  cli compile_core        [options]
-  cli compile_indicators  [options]
-  cli compile_raw         [options]
-  cli plot_workflow       [options]
-  cli plot_workflow_core  [options]
-  cli query_exec          [options] <id>
-  cli query_list          [options]
-  cli query_print         [options] <id>
-  cli test_config         [options]
-  cli [options]
+  ries analyse_era         [options] --start=<int> --finish=<int>
+  ries analyse_institution [options] --rorcode=<url>
+  ries analyse_topic       [options] --topic=<int>
+  ries compile_all         [options]
+  ries compile_benchmarks  [options]
+  ries compile_core        [options]
+  ries compile_indicators  [options]
+  ries compile_raw         [options]
+  ries plot_workflow       [options]
+  ries plot_workflow_core  [options]
+  ries query_run           [options] <id>
+  ries query_list          [options]
+  ries query_print         [options] <id>
+  ries test_config         [options]
+  ries [options]
 
 Options:
   --help, -h        Show this help message
@@ -180,7 +180,7 @@ Functions:
   compile_raw         - (Re)compile only the `raw` tables in the database by importing data from the COKI bucket.
   plot_workflow       - (Re)generate a Mermaid plot for the database build process.
   plot_workflow_core  - (Re)generate a Mermaid plot for the core workflow.
-  query_exec          - Compile a query and run it.
+  query_run          - Compile a query and run it.
   query_list          - Print a list of all available queries.
   query_print         - Compile a query and print the SQL to the screen without running it.
   test_config         - Check if the default config is valid and the app can connect to your database.

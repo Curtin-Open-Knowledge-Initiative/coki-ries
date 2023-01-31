@@ -104,11 +104,11 @@ Inside the application, many functions take an `args` object as input. In some i
 The command line interface may be launched from anywhere within the project by running `npm run cli` or specifically: `node code/app.js`. To see the CLI help information:
 
 ```bash
-npm run cli -- --help
+npm run cli help
  
 OR
 
-node . --help
+node . help
 ```
 
 ```docs
@@ -118,21 +118,21 @@ node . --help
 Run various RIES tasks from the command line
 
 Usage:
-  cli analyse_era         [options] --start=<int> --finish=<int>
-  cli analyse_institution [options] --rorcode=<url>
-  cli analyse_topic       [options] --topic=<int>
-  cli compile_all         [options]
-  cli compile_benchmarks  [options]
-  cli compile_core        [options]
-  cli compile_indicators  [options]
-  cli compile_raw         [options]
-  cli plot_workflow       [options]
-  cli plot_workflow_core  [options]
-  cli query_exec          [options] <id>
-  cli query_list          [options]
-  cli query_print         [options] <id>
-  cli test_config         [options]
-  cli [options]
+  ries analyse_era         [options] --start=<int> --finish=<int>
+  ries analyse_institution [options] --rorcode=<url>
+  ries analyse_topic       [options] --topic=<int>
+  ries compile_all         [options]
+  ries compile_benchmarks  [options]
+  ries compile_core        [options]
+  ries compile_indicators  [options]
+  ries compile_raw         [options]
+  ries plot_workflow       [options]
+  ries plot_workflow_core  [options]
+  ries query_run           [options] <id>
+  ries query_list          [options]
+  ries query_print         [options] <id>
+  ries test_config         [options]
+  ries [options]
 
 Options:
   --help, -h        Show this help message
@@ -162,7 +162,7 @@ Functions:
   compile_raw         - (Re)compile only the `raw` tables in the database by importing data from the COKI bucket.
   plot_workflow       - (Re)generate a Mermaid plot for the database build process.
   plot_workflow_core  - (Re)generate a Mermaid plot for the core workflow.
-  query_exec          - Compile a query and run it.
+  query_run           - Compile a query and run it.
   query_list          - Print a list of all available queries.
   query_print         - Compile a query and print the SQL to the screen without running it.
   test_config         - Check if the default config is valid and the app can connect to your database.
