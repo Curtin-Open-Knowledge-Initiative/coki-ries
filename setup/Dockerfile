@@ -6,12 +6,15 @@
 # docker login
 # docker push cokicurtin/ries:latest
 #
+# run container
+# docker run --rm -it cokicurtin/ries:latest sh
+#
 # run container with local files
 # docker run --rm -it --name ries \
 #  --volume ${PWD}/setup/.config.json:/app/setup/.config.json \
 #  --volume ${PWD}/setup/.access.json:/app/setup/.access.json \
 #  --volume ${PWD}/data:/app/data \
-# cokicurtin/coki-ries:latest node . config_test
+# cokicurtin/ries:latest node . config_test
 FROM alpine:3.16.2
 WORKDIR /app
 RUN apk update && apk upgrade \
