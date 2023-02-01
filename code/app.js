@@ -251,6 +251,8 @@ const conf = new function() {
 
   // validate in incoming object against the schema
   function validate(obj={}) {
+    obj.keyfile = resolve(obj.keyfile || def_access_file);
+    obj.confile = resolve(obj.confile || def_config_file);
     for (let [key,val] of Object.entries(obj)) {
       if (!schema[key]) continue;
       const {cast,test,info} = types[schema[key].type];
@@ -267,8 +269,8 @@ const conf = new function() {
 
   // get config from a JSON file
   function get_args_file(ifile='') {
-    try { return ifile ? lib_json.load(lib_file.resolve(ifile)) : {}; }
-    catch (e) { die(`unable to load config file at: ${lib_file.resolve(ifile)}`); }
+    try { return ifile ? lib_json.load(resolve(ifile)) : {}; }
+    catch (e) { die(`unable to load config file at: ${resolve(ifile)}`); }
   }
 
   // get config from CLI args

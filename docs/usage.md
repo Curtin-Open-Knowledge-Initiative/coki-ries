@@ -109,7 +109,7 @@ Access the CLI instructions by running `node . help` from within the project dir
 
 Run various RIES tasks from the command line
 
-Version: 1.0.0
+Version: 1.1.0 (2023-02-01)
 
 Usage:
   ries version

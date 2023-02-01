@@ -17,14 +17,15 @@ For detailed documentation, see: [install] | [configure] | [usage].
 
 ```bash
 # run with Docker
-docker run --rm -it cokicurtin/ries:latest sh
-node . --help
+docker run --rm -it cokicurtin/ries:latest
+node . help
 node . compile_all
 
 # or install and run locally
-git clone https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries.git && cd coki-ries
-npm install -g pnpm && pnpm install && pnpm audit
-node . --help
+git clone https://github.com/Curtin-Open-Knowledge-Initiative/coki-ries.git ries
+cd ries
+npx pnpm install
+node . help
 node . compile_all
 ```
 
