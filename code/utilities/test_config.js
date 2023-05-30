@@ -9,5 +9,10 @@ julian.tonti-filippini@curtin.edu.au
 Apache 2.0
 */
 const app = require('app');
-module.exports = () => app.out(JSON.stringify(app.conf(),null,2));
+module.exports = () => {
+  let conf = app.conf();
+  conf.keyfile = app.relative(conf.keyfile);
+  conf.confile = app.relative(conf.confile);
+  app.out(JSON.stringify(conf,null,2));
+}
 if (require.main === module) module.exports();

@@ -123,14 +123,14 @@ Usage:
   ries query_list          [options]
   ries query_print         [options] <id>
   ries query_run           [options] <id>
-  ries analyse_institution [options] --rorcode=<url>
-  ries analyse_topic       [options] --topic=<int>
-  ries analyse_era         [options] --start=<int> --finish=<int>
   ries compile_raw         [options]
   ries compile_core        [options]
   ries compile_benchmarks  [options]
   ries compile_indicators  [options]
   ries compile_all         [options]
+  ries analyse_institution [options] --rorcode=<url>
+  ries analyse_topic       [options] --topic=<int>
+  ries analyse_period      [options] --start=<int> --finish=<int>
   
 Options:
   --confile=<str>   Path to a JSON file that contains these config options as an object.

@@ -54,6 +54,9 @@ function resolve(...relparts) {
   const abspath = relpath.startsWith(homedir) ? lib_file.resolve(relpath) : lib_file.resolve(homedir,relpath);
   return abspath.startsWith(homedir) ? abspath : err('specified path is outside the project:',abspath);
 }
+function relative(p) {
+  return p.replace(homedir+'/','');
+}
 
 // determine if a file or directory exists relative to the project home directory
 function exists(...relparts) {
@@ -322,7 +325,7 @@ module.exports = {
   db   : lib_bigq,
   file : lib_file,
   log, err, msg, out,
-  resolve, reserve, exists, load, save,
+  resolve, reserve, exists, load, save, relative,
   download, curl, exec, plot, query, 
   cli_run : cli.run, 
   cli_compile : cli.compile,

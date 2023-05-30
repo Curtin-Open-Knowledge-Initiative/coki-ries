@@ -24,6 +24,8 @@ const file = {
   size       : (f) => file.stat(f).size,
   load       : (f) => file.exists(f) ? fs.readFileSync(f).toString() : '',
   save       : (f,s) => fs.writeFileSync(f,s),
+  copy       : (s,d) => file.exists(s) && fs.cpSync(s,d),
+  move       : (s,d) => file.copy(s,d) && file.remove(s),
   remove     : (f) => file.exists(f) ? fs.unlinkSync(f) : '',
   load_lines : (f) => file.load(f).split(file.EOL).filter(v=>v),
   save_lines : (f,a) => file.save(f,a.filter(v=>v).join(file.EOL) + file.EOL),
@@ -32,7 +34,7 @@ const file = {
   is_dir     : (f) => file.exists(f) && file.stat(f).isDirectory(),
   ls         : (f) => file.is_dir(f) ? fs.readdirSync(f).map(ff => file.resolve(f,ff)) : [],
   ls_files   : (f) => file.ls(f).filter(file.is_file),
-  mkdir      : (f) => (file.is_dir(f)  || (!file.exists(f) &&  fs.mkdirSync(f,{recursive:true})) ? f : ''),
+  mkdir      : (f) => (file.is_dir(f) || (!file.exists(f) &&  fs.mkdirSync(f,{recursive:true})) ? f : ''),
   mkfile     : (f) => file.is_file(f) || (!file.exists(f) && !fs.closeSync(fs.openSync(f,'a'))),
   mk         : (f) => file.mkdir(file.dir(f)) && file.mkfile(f),
 };
