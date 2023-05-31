@@ -12,8 +12,6 @@ keyfile.*
 access.*
 config.*
 
-/release
-
 /code/plotters/demo
 /code/internal/jobs/elements/*/data/*
 
